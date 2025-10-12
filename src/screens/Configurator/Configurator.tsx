@@ -371,12 +371,12 @@ export const Configurator: React.FC = () => {
               <motion.div
                 whileHover={{ y: -8, scale: 1.02 }}
                 onClick={() => setMode("ai")}
-                className="relative bg-gradient-to-br from-[#7C3AED]/20 to-[#A855F7]/20 rounded-2xl p-8 border border-[#7C3AED]/30 cursor-pointer overflow-hidden group"
+                className="relative bg-gradient-to-br from-[#4F8BF7]/20 to-[#6B9CFF]/20 rounded-2xl p-8 border border-[#4F8BF7]/30 cursor-pointer overflow-hidden group"
               >
                 <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(124,58,237,0.1)_25%,rgba(124,58,237,0.1)_50%,transparent_50%,transparent_75%,rgba(124,58,237,0.1)_75%)] bg-[length:20px_20px]" />
                 
                 <div className="relative z-10">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#7C3AED] to-[#A855F7] rounded-2xl flex items-center justify-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-2xl flex items-center justify-center mb-6">
                     <Sparkles className="w-8 h-8 text-white" />
                   </div>
                   
@@ -388,7 +388,7 @@ export const Configurator: React.FC = () => {
                     Répondez à quelques questions et laissez notre IA vous proposer la configuration parfaite adaptée à vos besoins et votre budget.
                   </p>
                   
-                  <div className="flex items-center gap-2 text-[#7C3AED] font-semibold">
+                  <div className="flex items-center gap-2 text-[#4F8BF7] font-semibold">
                     <span>Commencer le questionnaire</span>
                     <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                   </div>
@@ -402,7 +402,7 @@ export const Configurator: React.FC = () => {
                 className="relative bg-[#1a1a1a]/80 backdrop-blur-xl rounded-2xl p-8 border border-white/10 cursor-pointer group"
               >
                 <div className="w-16 h-16 bg-[#0E0E10] border border-white/10 rounded-2xl flex items-center justify-center mb-6">
-                  <Settings className="w-8 h-8 text-[#7C3AED]" />
+                  <Settings className="w-8 h-8 text-[#4F8BF7]" />
                 </div>
                 
                 <h3 className="text-2xl font-bold text-[#F5F5F7] mb-3">
@@ -413,7 +413,7 @@ export const Configurator: React.FC = () => {
                   Sélectionnez vous-même chaque composant étape par étape avec vérification automatique de compatibilité.
                 </p>
                 
-                <div className="flex items-center gap-2 text-[#7C3AED] font-semibold">
+                <div className="flex items-center gap-2 text-[#4F8BF7] font-semibold">
                   <span>Choisir mes composants</span>
                   <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                 </div>
@@ -521,8 +521,8 @@ export const Configurator: React.FC = () => {
                       />
                       <defs>
                         <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#7C3AED" />
-                          <stop offset="100%" stopColor="#A855F7" />
+                          <stop offset="0%" stopColor="#4F8BF7" />
+                          <stop offset="100%" stopColor="#6B9CFF" />
                         </linearGradient>
                       </defs>
                     </svg>
@@ -556,15 +556,15 @@ export const Configurator: React.FC = () => {
                         >
                           <div className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all ${
                             isCompleted 
-                              ? 'bg-[#7C3AED] border-[#7C3AED]' 
+                              ? 'bg-[#4F8BF7] border-[#4F8BF7]' 
                               : isCurrent
-                              ? 'bg-[#1a1a1a] border-[#7C3AED]'
+                              ? 'bg-[#1a1a1a] border-[#4F8BF7]'
                               : 'bg-[#1a1a1a] border-white/10'
                           }`}>
                             {isCompleted ? (
                               <Check className="w-6 h-6 text-white" />
                             ) : (
-                              <Icon className={`w-6 h-6 ${isCurrent ? 'text-[#7C3AED]' : 'text-[#A1A1AA]'}`} />
+                              <Icon className={`w-6 h-6 ${isCurrent ? 'text-[#4F8BF7]' : 'text-[#A1A1AA]'}`} />
                             )}
                           </div>
                           <span className={`text-xs font-medium ${
@@ -575,7 +575,7 @@ export const Configurator: React.FC = () => {
                         </motion.div>
                         {index < configurationSteps.length - 1 && (
                           <div className={`flex-1 h-0.5 mx-2 ${
-                            isPast ? 'bg-[#7C3AED]' : 'bg-white/10'
+                            isPast ? 'bg-[#4F8BF7]' : 'bg-white/10'
                           }`} />
                         )}
                       </React.Fragment>
@@ -610,7 +610,7 @@ export const Configurator: React.FC = () => {
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-gradient-to-r from-[#7C3AED]/10 to-[#A855F7]/10 rounded-xl p-6 border border-[#7C3AED]/30"
+                    className="bg-gradient-to-r from-[#4F8BF7]/10 to-[#6B9CFF]/10 rounded-xl p-6 border border-[#4F8BF7]/30"
                   >
                     <div className="flex items-center gap-4">
                       <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${currentStepConfig.color} flex items-center justify-center`}>
@@ -655,8 +655,8 @@ export const Configurator: React.FC = () => {
                             onClick={() => selectComponent(component)}
                             className={`p-6 rounded-xl cursor-pointer transition-all relative overflow-hidden group ${
                               isSelected
-                                ? 'bg-[#7C3AED]/20 border-2 border-[#7C3AED] shadow-lg shadow-[#7C3AED]/20'
-                                : 'bg-[#1a1a1a] border border-white/10 hover:border-[#7C3AED]/50'
+                                ? 'bg-[#4F8BF7]/20 border-2 border-[#4F8BF7] shadow-lg shadow-[#4F8BF7]/20'
+                                : 'bg-[#1a1a1a] border border-white/10 hover:border-[#4F8BF7]/50'
                             }`}
                           >
                             {isSelected && (
@@ -667,9 +667,9 @@ export const Configurator: React.FC = () => {
                               <div className="flex items-start justify-between mb-4">
                                 <div className="flex items-center gap-3">
                                   <div className={`w-12 h-12 rounded-lg flex items-center justify-center border ${
-                                    isSelected ? 'bg-[#7C3AED]/20 border-[#7C3AED]' : 'bg-[#0E0E10] border-white/10'
+                                    isSelected ? 'bg-[#4F8BF7]/20 border-[#4F8BF7]' : 'bg-[#0E0E10] border-white/10'
                                   }`}>
-                                    <currentStepConfig.icon className={`w-6 h-6 ${isSelected ? 'text-[#7C3AED]' : 'text-[#A1A1AA]'}`} />
+                                    <currentStepConfig.icon className={`w-6 h-6 ${isSelected ? 'text-[#4F8BF7]' : 'text-[#A1A1AA]'}`} />
                                   </div>
                                   <div>
                                     <span className="text-xs text-[#A1A1AA] uppercase tracking-wider">{component.brand}</span>
@@ -681,7 +681,7 @@ export const Configurator: React.FC = () => {
                                     <motion.div
                                       initial={{ scale: 0 }}
                                       animate={{ scale: 1 }}
-                                      className="w-6 h-6 bg-[#7C3AED] rounded-full flex items-center justify-center"
+                                      className="w-6 h-6 bg-[#4F8BF7] rounded-full flex items-center justify-center"
                                     >
                                       <Check className="w-4 h-4 text-white" />
                                     </motion.div>
@@ -693,9 +693,9 @@ export const Configurator: React.FC = () => {
                                       e.stopPropagation();
                                       setSelectedComponentForDetail(component);
                                     }}
-                                    className="p-1 rounded-full bg-[#0E0E10]/50 border border-white/10 hover:bg-[#7C3AED]/20 transition-all opacity-0 group-hover:opacity-100"
+                                    className="p-1 rounded-full bg-[#0E0E10]/50 border border-white/10 hover:bg-[#4F8BF7]/20 transition-all opacity-0 group-hover:opacity-100"
                                   >
-                                    <Info className="w-4 h-4 text-[#A1A1AA] group-hover:text-[#7C3AED]" />
+                                    <Info className="w-4 h-4 text-[#A1A1AA] group-hover:text-[#4F8BF7]" />
                                   </motion.button>
                                 </div>
                               </div>
@@ -704,7 +704,7 @@ export const Configurator: React.FC = () => {
                               <div className="space-y-1 mb-4">
                                 {component.specs.slice(0, 3).map((spec, i) => (
                                   <div key={i} className="flex items-center gap-2 text-xs text-[#A1A1AA]">
-                                    <div className="w-1 h-1 bg-[#7C3AED] rounded-full" />
+                                    <div className="w-1 h-1 bg-[#4F8BF7] rounded-full" />
                                     {spec}
                                   </div>
                                 ))}
@@ -729,7 +729,7 @@ export const Configurator: React.FC = () => {
                               {/* Price and Wattage */}
                               <div className="pt-3 border-t border-white/5">
                                 <div className="flex items-center justify-between">
-                                  <div className="text-2xl font-bold text-[#7C3AED]">
+                                  <div className="text-2xl font-bold text-[#4F8BF7]">
                                     {fmt(priceMap[component.name]?.ttc ?? component.price)}
                                   </div>
                                   {component.wattage && component.wattage > 0 && (
@@ -741,7 +741,7 @@ export const Configurator: React.FC = () => {
                                 </div>
                                 {priceMap[component.name] && (
                                   <div className="text-xs text-[#A1A1AA] mt-1">
-                                    via <a className="underline text-[#7C3AED] hover:text-[#A855F7]" href={priceMap[component.name]?.url} target="_blank" rel="noopener noreferrer">
+                                    via <a className="underline text-[#4F8BF7] hover:text-[#6B9CFF]" href={priceMap[component.name]?.url} target="_blank" rel="noopener noreferrer">
                                       {priceMap[component.name]?.vendor}
                                     </a>
                                   </div>
@@ -772,7 +772,7 @@ export const Configurator: React.FC = () => {
                       whileTap={{ scale: 0.95 }}
                       onClick={goToNextStep}
                       disabled={currentStep === configurationSteps.length - 1 || !config[currentStepConfig.key]}
-                      className="px-6 py-3 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white rounded-lg font-semibold shadow-lg shadow-[#7C3AED]/30 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-6 py-3 bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] text-white rounded-lg font-semibold shadow-lg shadow-[#4F8BF7]/30 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {currentStep === configurationSteps.length - 1 ? "Terminer" : "Suivant"}
                       <ChevronRight className="w-5 h-5" />
@@ -859,7 +859,7 @@ export const Configurator: React.FC = () => {
                       <div className="flex items-center justify-between">
                         <span className="text-[#A1A1AA]">Prix total estimé</span>
                         <div className="flex flex-col items-end">
-                          <div className="text-3xl font-bold bg-gradient-to-r from-[#7C3AED] to-[#A855F7] bg-clip-text text-transparent">
+                          <div className="text-3xl font-bold bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] bg-clip-text text-transparent">
                             {fmt(totalTTC)}
                           </div>
                           {pricesLoading && <div className="text-xs text-[#A1A1AA] mt-1">Vérification des prix…</div>}
@@ -881,7 +881,7 @@ export const Configurator: React.FC = () => {
                             initial={{ width: 0 }}
                             animate={{ width: `${getPerformanceScore()}%` }}
                             transition={{ duration: 0.5 }}
-                            className="h-full bg-gradient-to-r from-[#7C3AED] to-[#A855F7]"
+                            className="h-full bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF]"
                           />
                         </div>
                       </div>
@@ -902,7 +902,7 @@ export const Configurator: React.FC = () => {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         disabled={totalTTC === 0}
-                        className="w-full py-3 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white rounded-lg font-semibold shadow-lg shadow-[#7C3AED]/30 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full py-3 bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] text-white rounded-lg font-semibold shadow-lg shadow-[#4F8BF7]/30 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <Save className="w-5 h-5" />
                         Sauvegarder
@@ -937,12 +937,12 @@ export const Configurator: React.FC = () => {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-[#7C3AED]/10 border border-[#7C3AED]/30 rounded-xl p-4"
+                    className="bg-[#4F8BF7]/10 border border-[#4F8BF7]/30 rounded-xl p-4"
                   >
                     <div className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-[#A855F7] flex-shrink-0 mt-0.5" />
+                      <Check className="w-5 h-5 text-[#6B9CFF] flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="text-sm font-semibold text-[#A855F7] mb-1">
+                        <p className="text-sm font-semibold text-[#6B9CFF] mb-1">
                           Compatibilité vérifiée
                         </p>
                         <p className="text-xs text-[#A1A1AA]">

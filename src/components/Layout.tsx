@@ -43,7 +43,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
             <motion.div 
-              className="w-10 h-10 bg-gradient-to-br from-[#7C3AED] to-[#A855F7] rounded-lg flex items-center justify-center"
+              className="w-10 h-10 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-lg flex items-center justify-center"
               whileHover={{ rotate: 360 }}
               transition={{ duration: 0.6 }}
             >
@@ -64,7 +64,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               >
                 {item.name}
                 <motion.span 
-                  className="absolute -bottom-1 left-0 h-px bg-[#7C3AED]"
+                  className="absolute -bottom-1 left-0 h-px bg-[#4F8BF7]"
                   initial={{ width: 0 }}
                   animate={{ width: location.pathname === item.path ? '100%' : 0 }}
                   transition={{ duration: 0.3 }}
@@ -81,7 +81,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-[#7C3AED] to-[#A855F7] flex items-center justify-center"
+                className="w-10 h-10 rounded-full bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] flex items-center justify-center"
               >
                 <User className="w-5 h-5 text-white" />
               </motion.button>
@@ -90,7 +90,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsLoggedIn(true)}
-                className="px-5 py-2.5 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white rounded-full text-sm font-semibold shadow-lg shadow-[#7C3AED]/30 hover:shadow-[#7C3AED]/50 transition-all duration-300"
+                className="px-5 py-2.5 bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] text-white rounded-full text-sm font-semibold shadow-lg shadow-[#4F8BF7]/30 hover:shadow-[#4F8BF7]/50 transition-all duration-300"
               >
                 Connexion
               </motion.button>
@@ -111,7 +111,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             {/* Brand */}
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#7C3AED] to-[#A855F7] rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-lg flex items-center justify-center">
                   <Cpu className="w-6 h-6 text-white" />
                 </div>
                 <span className="text-xl font-bold text-[#F5F5F7]">PC Builder</span>
@@ -127,7 +127,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               <ul className="space-y-2">
                 {navigationItems.map(item => (
                   <li key={item.name}>
-                    <Link to={item.path} className="text-[#A1A1AA] hover:text-[#7C3AED] text-sm transition-colors">
+                    <Link to={item.path} className="text-[#A1A1AA] hover:text-[#4F8BF7] text-sm transition-colors">
                       {item.name}
                     </Link>
                   </li>
@@ -139,9 +139,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div>
               <h4 className="text-[#F5F5F7] font-semibold mb-4">Légal</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-[#A1A1AA] hover:text-[#7C3AED] text-sm transition-colors">Mentions légales</a></li>
-                <li><a href="#" className="text-[#A1A1AA] hover:text-[#7C3AED] text-sm transition-colors">CGU</a></li>
-                <li><a href="#" className="text-[#A1A1AA] hover:text-[#7C3AED] text-sm transition-colors">Confidentialité</a></li>
+                <li><a href="#" className="text-[#A1A1AA] hover:text-[#4F8BF7] text-sm transition-colors">Mentions légales</a></li>
+                <li><a href="#" className="text-[#A1A1AA] hover:text-[#4F8BF7] text-sm transition-colors">CGU</a></li>
+                <li><a href="#" className="text-[#A1A1AA] hover:text-[#4F8BF7] text-sm transition-colors">Confidentialité</a></li>
               </ul>
             </div>
 
@@ -149,8 +149,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div>
               <h4 className="text-[#F5F5F7] font-semibold mb-4">Contact</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-[#A1A1AA] hover:text-[#7C3AED] text-sm transition-colors">Support</a></li>
-                <li><a href="#" className="text-[#A1A1AA] hover:text-[#7C3AED] text-sm transition-colors">À propos</a></li>
+                <li><a href="#" className="text-[#A1A1AA] hover:text-[#4F8BF7] text-sm transition-colors">Support</a></li>
+                <li><a href="#" className="text-[#A1A1AA] hover:text-[#4F8BF7] text-sm transition-colors">À propos</a></li>
               </ul>
             </div>
           </div>

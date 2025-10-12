@@ -151,14 +151,14 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
       <div className="mb-12">
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm text-[#A1A1AA]">Question {currentQuestion + 1} sur {questions.length}</span>
-          <span className="text-sm font-semibold text-[#7C3AED]">{Math.round(progress)}%</span>
+          <span className="text-sm font-semibold text-[#4F8BF7]">{Math.round(progress)}%</span>
         </div>
         <div className="w-full h-2 bg-[#1a1a1a] rounded-full overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.5 }}
-            className="h-full bg-gradient-to-r from-[#7C3AED] to-[#A855F7]"
+            className="h-full bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF]"
           />
         </div>
       </div>
@@ -174,7 +174,7 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
           className="bg-[#1a1a1a]/80 backdrop-blur-xl rounded-2xl p-8 border border-white/10 mb-8"
         >
           <div className="flex items-start gap-4 mb-8">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#7C3AED] to-[#A855F7] rounded-xl flex items-center justify-center flex-shrink-0">
+            <div className="w-12 h-12 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-xl flex items-center justify-center flex-shrink-0">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -201,8 +201,8 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
                       onClick={() => handleAnswer(option.value)}
                       className={`p-6 rounded-xl text-left transition-all ${
                         isSelected
-                          ? 'bg-[#7C3AED]/20 border-2 border-[#7C3AED] shadow-lg shadow-[#7C3AED]/20'
-                          : 'bg-[#0E0E10] border border-white/10 hover:border-[#7C3AED]/50'
+                          ? 'bg-[#4F8BF7]/20 border-2 border-[#4F8BF7] shadow-lg shadow-[#4F8BF7]/20'
+                          : 'bg-[#0E0E10] border border-white/10 hover:border-[#4F8BF7]/50'
                       }`}
                     >
                       <div className="flex items-center gap-4">
@@ -231,8 +231,8 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
                       onClick={() => handleAnswer(option.value)}
                       className={`p-6 rounded-xl text-left transition-all ${
                         isSelected
-                          ? 'bg-[#7C3AED]/20 border-2 border-[#7C3AED] shadow-lg shadow-[#7C3AED]/20'
-                          : 'bg-[#0E0E10] border border-white/10 hover:border-[#7C3AED]/50'
+                          ? 'bg-[#4F8BF7]/20 border-2 border-[#4F8BF7] shadow-lg shadow-[#4F8BF7]/20'
+                          : 'bg-[#0E0E10] border border-white/10 hover:border-[#4F8BF7]/50'
                       }`}
                     >
                       <div className="flex items-center gap-4">
@@ -252,7 +252,7 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
             {currentQ.type === "range" && (
               <div className="space-y-6">
                 <div className="text-center">
-                  <span className="text-5xl font-bold bg-gradient-to-r from-[#7C3AED] to-[#A855F7] bg-clip-text text-transparent">
+                  <span className="text-5xl font-bold bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] bg-clip-text text-transparent">
                     {answers[currentQ.id] || currentQ.min}{currentQ.unit}
                   </span>
                 </div>
@@ -263,7 +263,7 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
                   step={currentQ.step}
                   value={answers[currentQ.id] || currentQ.min}
                   onChange={(e) => handleAnswer(parseInt(e.target.value))}
-                  className="w-full h-3 bg-[#0E0E10] rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r [&::-webkit-slider-thumb]:from-[#7C3AED] [&::-webkit-slider-thumb]:to-[#A855F7] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:shadow-[#7C3AED]/50"
+                  className="w-full h-3 bg-[#0E0E10] rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r [&::-webkit-slider-thumb]:from-[#4F8BF7] [&::-webkit-slider-thumb]:to-[#6B9CFF] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:shadow-[#4F8BF7]/50"
                 />
                 <div className="flex justify-between text-sm text-[#A1A1AA]">
                   <span>{currentQ.min}{currentQ.unit}</span>
@@ -293,7 +293,7 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
           whileTap={{ scale: 0.95 }}
           onClick={handleNext}
           disabled={!isAnswered()}
-          className="px-6 py-3 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white rounded-lg font-semibold shadow-lg shadow-[#7C3AED]/30 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-6 py-3 bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] text-white rounded-lg font-semibold shadow-lg shadow-[#4F8BF7]/30 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {currentQuestion === questions.length - 1 ? "Voir ma config" : "Suivant"}
           <ChevronRight className="w-5 h-5" />

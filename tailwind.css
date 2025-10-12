@@ -13,14 +13,14 @@
   :root {
     --background: #0E0E10;
     --foreground: #F5F5F7;
-    --primary: #7C3AED;
+    --primary: #4F8BF7;
     --secondary: #A1A1AA;
   }
 
   .light {
     --background: #FFFFFF;
     --foreground: #0E0E10;
-    --primary: #7C3AED;
+    --primary: #4F8BF7;
     --secondary: #71717A;
   }
 

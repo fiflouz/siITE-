@@ -36,15 +36,15 @@ export const ComponentDetailModal: React.FC<ComponentDetailModalProps> = ({ comp
   const displayPrice = externalPriceInfo?.ttc ?? component.price;
 
   const getCategoryIcon = (componentName: string) => {
-    if (componentName.includes("Intel Core") || componentName.includes("Ryzen")) return <Cpu className="w-8 h-8 text-[#7C3AED]" />;
-    if (componentName.includes("RTX") || componentName.includes("Radeon")) return <Monitor className="w-8 h-8 text-[#7C3AED]" />;
+    if (componentName.includes("Intel Core") || componentName.includes("Ryzen")) return <Cpu className="w-8 h-8 text-[#4F8BF7]" />;
+    if (componentName.includes("RTX") || componentName.includes("Radeon")) return <Monitor className="w-8 h-8 text-[#4F8BF7]" />;
     if (componentName.includes("ASUS") || componentName.includes("MSI") || componentName.includes("Gigabyte") || componentName.includes("ASRock")) {
-      if (component.specs.some(s => s.includes("LGA") || s.includes("AM"))) return <Cpu className="w-8 h-8 text-[#7C3AED]" />; // Motherboard
+      if (component.specs.some(s => s.includes("LGA") || s.includes("AM"))) return <Cpu className="w-8 h-8 text-[#4F8BF7]" />; // Motherboard
     }
-    if (componentName.includes("DDR")) return <MemoryStick className="w-8 h-8 text-[#7C3AED]" />;
-    if (componentName.includes("SSD") || componentName.includes("HDD")) return <HardDrive className="w-8 h-8 text-[#7C3AED]" />;
-    if (componentName.includes("W") && component.specs.some(s => s.includes("80+"))) return <Zap className="w-8 h-8 text-[#7C3AED]" />;
-    return <Info className="w-8 h-8 text-[#7C3AED]" />;
+    if (componentName.includes("DDR")) return <MemoryStick className="w-8 h-8 text-[#4F8BF7]" />;
+    if (componentName.includes("SSD") || componentName.includes("HDD")) return <HardDrive className="w-8 h-8 text-[#4F8BF7]" />;
+    if (componentName.includes("W") && component.specs.some(s => s.includes("80+"))) return <Zap className="w-8 h-8 text-[#4F8BF7]" />;
+    return <Info className="w-8 h-8 text-[#4F8BF7]" />;
   };
 
   return (
@@ -79,10 +79,10 @@ export const ComponentDetailModal: React.FC<ComponentDetailModalProps> = ({ comp
               <div>
                 <span className="text-sm text-[#A1A1AA] uppercase tracking-wider">{component.brand}</span>
                 <h2 className="text-3xl font-bold text-[#F5F5F7] mt-1">{component.name}</h2>
-                <div className="text-2xl font-bold text-[#7C3AED] mt-2">{fmt(displayPrice)}</div>
+                <div className="text-2xl font-bold text-[#4F8BF7] mt-2">{fmt(displayPrice)}</div>
                 {externalPriceInfo && (
                   <div className="text-xs text-[#A1A1AA] mt-1">
-                    via <a className="underline text-[#7C3AED] hover:text-[#A855F7]" href={externalPriceInfo.url} target="_blank" rel="noopener noreferrer">
+                    via <a className="underline text-[#4F8BF7] hover:text-[#6B9CFF]" href={externalPriceInfo.url} target="_blank" rel="noopener noreferrer">
                       {externalPriceInfo.vendor}
                     </a>
                     {" · "}{new Date(externalPriceInfo.fetchedAt).toLocaleString("fr-FR")}
@@ -118,37 +118,37 @@ export const ComponentDetailModal: React.FC<ComponentDetailModalProps> = ({ comp
                 <ul className="space-y-1 text-[#A1A1AA] text-sm">
                   {component.specs.map((spec, index) => (
                     <li key={index} className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-[#7C3AED] rounded-full flex-shrink-0" />
+                      <div className="w-1.5 h-1.5 bg-[#4F8BF7] rounded-full flex-shrink-0" />
                       <span>{spec}</span>
                     </li>
                   ))}
                   {component.performance && (
                     <li className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-[#7C3AED] rounded-full flex-shrink-0" />
+                      <div className="w-1.5 h-1.5 bg-[#4F8BF7] rounded-full flex-shrink-0" />
                       <span>Performance: {component.performance}%</span>
                     </li>
                   )}
                   {component.wattage && component.wattage > 0 && (
                     <li className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-[#7C3AED] rounded-full flex-shrink-0" />
+                      <div className="w-1.5 h-1.5 bg-[#4F8BF7] rounded-full flex-shrink-0" />
                       <span>Consommation: {component.wattage}W</span>
                     </li>
                   )}
                   {component.socket && (
                     <li className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-[#7C3AED] rounded-full flex-shrink-0" />
+                      <div className="w-1.5 h-1.5 bg-[#4F8BF7] rounded-full flex-shrink-0" />
                       <span>Socket: {component.socket}</span>
                     </li>
                   )}
                   {component.ramType && (
                     <li className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-[#7C3AED] rounded-full flex-shrink-0" />
+                      <div className="w-1.5 h-1.5 bg-[#4F8BF7] rounded-full flex-shrink-0" />
                       <span>Type RAM: {component.ramType}</span>
                     </li>
                   )}
                   {component.chipset && (
                     <li className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-[#7C3AED] rounded-full flex-shrink-0" />
+                      <div className="w-1.5 h-1.5 bg-[#4F8BF7] rounded-full flex-shrink-0" />
                       <span>Chipset: {component.chipset}</span>
                     </li>
                   )}

@@ -95,7 +95,7 @@ export const GamingFrame = (): JSX.Element => {
           >
             {/* Badge */}
             <motion.div 
-              className="inline-block px-4 py-1.5 bg-[#7C3AED]/10 border border-[#7C3AED]/30 rounded-full text-[#A855F7] text-sm font-medium"
+              className="inline-block px-4 py-1.5 bg-[#4F8BF7]/10 border border-[#4F8BF7]/30 rounded-full text-[#6B9CFF] text-sm font-medium"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring" }}
@@ -106,7 +106,7 @@ export const GamingFrame = (): JSX.Element => {
             {/* Title */}
             <h1 className="text-6xl font-bold text-[#F5F5F7] leading-tight tracking-tight">
               Construis ton
-              <span className="block bg-gradient-to-r from-[#7C3AED] to-[#A855F7] bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] bg-clip-text text-transparent">
                 PC Gaming Parfait
               </span>
             </h1>
@@ -122,7 +122,7 @@ export const GamingFrame = (): JSX.Element => {
                 <motion.button
                   whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(124, 58, 237, 0.4)" }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-8 py-3.5 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white rounded-lg font-semibold shadow-lg shadow-[#7C3AED]/30 flex items-center gap-2"
+                  className="px-8 py-3.5 bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] text-white rounded-lg font-semibold shadow-lg shadow-[#4F8BF7]/30 flex items-center gap-2"
                 >
                   <Cpu className="w-5 h-5" />
                   Créer ma config
@@ -165,7 +165,7 @@ export const GamingFrame = (): JSX.Element => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#7C3AED]/20 to-[#A855F7]/20 rounded-2xl blur-3xl" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#4F8BF7]/20 to-[#6B9CFF]/20 rounded-2xl blur-3xl" />
             <div className="relative bg-[#1a1a1a]/80 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
               {/* Config Preview */}
               <div className="w-full h-64 bg-[#0E0E10] rounded-xl mb-6 flex items-center justify-center border border-white/10 relative overflow-hidden">
@@ -180,7 +180,7 @@ export const GamingFrame = (): JSX.Element => {
                     ease: "linear"
                   }}
                 >
-                  <Cpu className="w-24 h-24 text-[#7C3AED]/30 relative z-10" />
+                  <Cpu className="w-24 h-24 text-[#4F8BF7]/30 relative z-10" />
                 </motion.div>
               </div>
 
@@ -188,7 +188,7 @@ export const GamingFrame = (): JSX.Element => {
                 {/* Header */}
                 <div className="flex items-center justify-between">
                   <h3 className="text-xl font-bold text-[#F5F5F7]">Config Recommandée</h3>
-                  <div className="flex items-center gap-1 px-3 py-1 bg-[#7C3AED]/10 rounded-full">
+                  <div className="flex items-center gap-1 px-3 py-1 bg-[#4F8BF7]/10 rounded-full">
                     <span className="text-[#F5F5F7] text-sm font-semibold">2499€</span>
                   </div>
                 </div>
@@ -213,7 +213,7 @@ export const GamingFrame = (): JSX.Element => {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full py-3 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white rounded-lg font-semibold shadow-lg shadow-[#7C3AED]/30 hover:shadow-[#7C3AED]/50 transition-all duration-300 mt-4"
+                  className="w-full py-3 bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] text-white rounded-lg font-semibold shadow-lg shadow-[#4F8BF7]/30 hover:shadow-[#4F8BF7]/50 transition-all duration-300 mt-4"
                 >
                   Voir la configuration
                 </motion.button>
@@ -243,19 +243,19 @@ export const GamingFrame = (): JSX.Element => {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1, duration: 0.6 }}
                   whileHover={{ y: -8 }}
-                  className={`group relative bg-[#1a1a1a]/80 backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-[#7C3AED]/50 transition-all duration-300 cursor-pointer flex flex-col h-full shadow-xl ${config.glowColor}`}
+                  className={`group relative bg-[#1a1a1a]/80 backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-[#4F8BF7]/50 transition-all duration-300 cursor-pointer flex flex-col h-full shadow-xl ${config.glowColor}`}
                 >
                   {/* Favorite Button */}
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => toggleFavorite(index)}
-                    className="absolute top-4 right-4 z-10 p-2 rounded-full bg-[#0E0E10]/80 backdrop-blur-sm border border-white/10 hover:border-[#7C3AED]/50 transition-all"
+                    className="absolute top-4 right-4 z-10 p-2 rounded-full bg-[#0E0E10]/80 backdrop-blur-sm border border-white/10 hover:border-[#4F8BF7]/50 transition-all"
                   >
                     <Heart 
                       className={`w-5 h-5 transition-all ${
                         favorites.includes(index) 
-                          ? 'fill-[#7C3AED] text-[#7C3AED]' 
+                          ? 'fill-[#4F8BF7] text-[#4F8BF7]' 
                           : 'text-[#A1A1AA]'
                       }`}
                     />
@@ -273,7 +273,7 @@ export const GamingFrame = (): JSX.Element => {
                     </div>
                     
                     <h3 className="text-2xl font-bold text-[#F5F5F7] mb-2">{config.name}</h3>
-                    <div className="text-3xl font-bold bg-gradient-to-r from-[#7C3AED] to-[#A855F7] bg-clip-text text-transparent">
+                    <div className="text-3xl font-bold bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] bg-clip-text text-transparent">
                       {config.price}
                     </div>
                   </div>
@@ -298,7 +298,7 @@ export const GamingFrame = (): JSX.Element => {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full py-3 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white rounded-lg font-semibold shadow-lg shadow-[#7C3AED]/20 hover:shadow-[#7C3AED]/40 transition-all duration-300 mb-4 relative overflow-hidden group"
+                    className="w-full py-3 bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] text-white rounded-lg font-semibold shadow-lg shadow-[#4F8BF7]/20 hover:shadow-[#4F8BF7]/40 transition-all duration-300 mb-4 relative overflow-hidden group"
                   >
                     <span className="relative z-10">Voir les détails</span>
                     <motion.div
@@ -322,7 +322,7 @@ export const GamingFrame = (): JSX.Element => {
                             viewport={{ once: true }}
                             transition={{ delay: 0.5 + i * 0.1 }}
                             className={`w-6 h-1.5 rounded-full origin-left ${
-                              i < config.performance ? 'bg-gradient-to-r from-[#7C3AED] to-[#A855F7]' : 'bg-white/10'
+                              i < config.performance ? 'bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF]' : 'bg-white/10'
                             }`}
                           />
                         ))}

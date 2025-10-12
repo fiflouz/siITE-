@@ -91,7 +91,7 @@ export const Guides: React.FC = () => {
               key={category}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-2.5 bg-[#1a1a1a] border border-white/10 rounded-lg font-semibold text-sm text-[#A1A1AA] hover:text-[#F5F5F7] hover:border-[#7C3AED]/50 transition-all"
+              className="px-6 py-2.5 bg-[#1a1a1a] border border-white/10 rounded-lg font-semibold text-sm text-[#A1A1AA] hover:text-[#F5F5F7] hover:border-[#4F8BF7]/50 transition-all"
             >
               {category}
             </motion.button>
@@ -104,11 +104,11 @@ export const Guides: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12"
         >
-          <div className="relative bg-gradient-to-r from-[#7C3AED]/20 to-[#A855F7]/20 rounded-2xl p-8 border border-[#7C3AED]/30 overflow-hidden">
+          <div className="relative bg-gradient-to-r from-[#4F8BF7]/20 to-[#6B9CFF]/20 rounded-2xl p-8 border border-[#4F8BF7]/30 overflow-hidden">
             <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(124,58,237,0.1)_25%,rgba(124,58,237,0.1)_50%,transparent_50%,transparent_75%,rgba(124,58,237,0.1)_75%)] bg-[length:20px_20px]" />
             
             <div className="relative z-10 max-w-3xl">
-              <span className="inline-block px-3 py-1 bg-[#7C3AED]/20 border border-[#7C3AED]/30 rounded-full text-[#A855F7] text-xs font-semibold mb-4">
+              <span className="inline-block px-3 py-1 bg-[#4F8BF7]/20 border border-[#4F8BF7]/30 rounded-full text-[#6B9CFF] text-xs font-semibold mb-4">
                 ⭐ Guide vedette
               </span>
               
@@ -134,7 +134,7 @@ export const Guides: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-3 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white rounded-lg font-semibold shadow-lg shadow-[#7C3AED]/30 flex items-center gap-2"
+                className="px-8 py-3 bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] text-white rounded-lg font-semibold shadow-lg shadow-[#4F8BF7]/30 flex items-center gap-2"
               >
                 Lire le guide
                 <ArrowRight className="w-5 h-5" />
@@ -152,21 +152,21 @@ export const Guides: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ y: -8 }}
-              className="bg-[#1a1a1a]/80 backdrop-blur-xl rounded-xl overflow-hidden border border-white/10 hover:border-[#7C3AED]/50 transition-all cursor-pointer group"
+              className="bg-[#1a1a1a]/80 backdrop-blur-xl rounded-xl overflow-hidden border border-white/10 hover:border-[#4F8BF7]/50 transition-all cursor-pointer group"
             >
               {/* Image Placeholder */}
-              <div className="w-full h-48 bg-gradient-to-br from-[#7C3AED]/20 to-[#A855F7]/20 flex items-center justify-center border-b border-white/10">
+              <div className="w-full h-48 bg-gradient-to-br from-[#4F8BF7]/20 to-[#6B9CFF]/20 flex items-center justify-center border-b border-white/10">
                 <span className="text-6xl">📚</span>
               </div>
 
               {/* Content */}
               <div className="p-6 space-y-4">
                 <div>
-                  <span className="inline-block px-3 py-1 bg-[#7C3AED]/10 border border-[#7C3AED]/30 rounded-full text-[#A855F7] text-xs font-semibold mb-3">
+                  <span className="inline-block px-3 py-1 bg-[#4F8BF7]/10 border border-[#4F8BF7]/30 rounded-full text-[#6B9CFF] text-xs font-semibold mb-3">
                     {guide.category}
                   </span>
                   
-                  <h3 className="text-xl font-bold text-[#F5F5F7] mb-2 group-hover:text-[#7C3AED] transition-colors">
+                  <h3 className="text-xl font-bold text-[#F5F5F7] mb-2 group-hover:text-[#4F8BF7] transition-colors">
                     {guide.title}
                   </h3>
                   
@@ -190,7 +190,7 @@ export const Guides: React.FC = () => {
                 {/* Read More */}
                 <motion.button
                   whileHover={{ x: 5 }}
-                  className="flex items-center gap-2 text-[#7C3AED] font-semibold text-sm group-hover:gap-3 transition-all"
+                  className="flex items-center gap-2 text-[#4F8BF7] font-semibold text-sm group-hover:gap-3 transition-all"
                 >
                   Lire l'article
                   <ArrowRight className="w-4 h-4" />
