@@ -105,7 +105,7 @@ export const Guides: React.FC = () => {
           className="mb-12"
         >
           <div className="relative bg-gradient-to-r from-[#4F8BF7]/20 to-[#6B9CFF]/20 rounded-2xl p-8 border border-[#4F8BF7]/30 overflow-hidden">
-            <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(124,58,237,0.1)_25%,rgba(124,58,237,0.1)_50%,transparent_50%,transparent_75%,rgba(124,58,237,0.1)_75%)] bg-[length:20px_20px]" />
+            <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(79,139,247,0.05)_25%,rgba(79,139,247,0.05)_50%,transparent_50%,transparent_75%,rgba(79,139,247,0.05)_75%)] bg-[length:20px_20px]" />
             
             <div className="relative z-10 max-w-3xl">
               <span className="inline-block px-3 py-1 bg-[#4F8BF7]/20 border border-[#4F8BF7]/30 rounded-full text-[#6B9CFF] text-xs font-semibold mb-4">

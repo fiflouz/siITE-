@@ -169,7 +169,7 @@ export const GamingFrame = (): JSX.Element => {
             <div className="relative bg-[#1a1a1a]/80 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
               {/* Config Preview */}
               <div className="w-full h-64 bg-[#0E0E10] rounded-xl mb-6 flex items-center justify-center border border-white/10 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(124,58,237,0.05)_25%,rgba(124,58,237,0.05)_50%,transparent_50%,transparent_75%,rgba(124,58,237,0.05)_75%)] bg-[length:20px_20px]" />
+                <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(79,139,247,0.03)_25%,rgba(79,139,247,0.03)_50%,transparent_50%,transparent_75%,rgba(79,139,247,0.03)_75%)] bg-[length:20px_20px]" />
                 <motion.div
                   animate={{ 
                     rotateY: [0, 360],

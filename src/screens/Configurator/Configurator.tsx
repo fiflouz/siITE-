@@ -373,7 +373,7 @@ export const Configurator: React.FC = () => {
                 onClick={() => setMode("ai")}
                 className="relative bg-gradient-to-br from-[#4F8BF7]/20 to-[#6B9CFF]/20 rounded-2xl p-8 border border-[#4F8BF7]/30 cursor-pointer overflow-hidden group"
               >
-                <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(124,58,237,0.1)_25%,rgba(124,58,237,0.1)_50%,transparent_50%,transparent_75%,rgba(124,58,237,0.1)_75%)] bg-[length:20px_20px]" />
+                <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(79,139,247,0.05)_25%,rgba(79,139,247,0.05)_50%,transparent_50%,transparent_75%,rgba(79,139,247,0.05)_75%)] bg-[length:20px_20px]" />
                 
                 <div className="relative z-10">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-2xl flex items-center justify-center mb-6">
