@@ -1,0 +1,340 @@
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Cpu, Heart } from "lucide-react";
+import { Link } from "react-router-dom";
+import { AnimatedCounter } from "../../components/AnimatedCounter";
+import { ScrollReveal } from "../../components/ScrollReveal";
+import { Layout } from "../../components/Layout";
+
+export const GamingFrame = (): JSX.Element => {
+  const [favorites, setFavorites] = useState<number[]>([]);
+  
+  const stats = [
+    { value: 50000, label: 'Configurations', suffix: '+' },
+    { value: 2000, label: 'Composants', suffix: '+' },
+    { value: 15000, label: 'Utilisateurs', suffix: '+' }
+  ];
+
+  const featuredSpecs = [
+    { component: 'CPU', name: 'AMD Ryzen 7 7800X3D' },
+    { component: 'GPU', name: 'RTX 4070 Ti Super' },
+    { component: 'RAM', name: '32GB DDR5 6000MHz' },
+    { component: 'SSD', name: '1TB NVMe Gen4' }
+  ];
+
+  const configurations = [
+    {
+      tier: 'Entrée de Gamme',
+      name: 'Gaming Starter',
+      price: '799€',
+      badge: 'Idéal débutant',
+      badgeColor: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+      glowColor: 'group-hover:shadow-blue-500/20',
+      performance: 2,
+      specs: [
+        { label: 'CPU', value: 'Intel i5-13400F' },
+        { label: 'GPU', value: 'RTX 4060' },
+        { label: 'RAM', value: '16GB DDR4' },
+        { label: 'SSD', value: '500GB NVMe' },
+        { label: 'Alim', value: '550W Bronze' }
+      ]
+    },
+    {
+      tier: 'Milieu de Gamme',
+      name: 'Gaming Pro',
+      price: '1499€',
+      badge: 'Meilleur rapport',
+      badgeColor: 'bg-green-500/20 text-green-400 border-green-500/30',
+      glowColor: 'group-hover:shadow-green-500/20',
+      performance: 4,
+      specs: [
+        { label: 'CPU', value: 'AMD Ryzen 7 7700X' },
+        { label: 'GPU', value: 'RTX 4070 Super' },
+        { label: 'RAM', value: '32GB DDR5' },
+        { label: 'SSD', value: '1TB NVMe Gen4' },
+        { label: 'Alim', value: '750W Gold' }
+      ]
+    },
+    {
+      tier: 'Haut de Gamme',
+      name: 'Gaming Elite',
+      price: '2999€',
+      badge: 'Performance max',
+      badgeColor: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+      glowColor: 'group-hover:shadow-purple-500/20',
+      performance: 5,
+      specs: [
+        { label: 'CPU', value: 'AMD Ryzen 9 7950X3D' },
+        { label: 'GPU', value: 'RTX 4090' },
+        { label: 'RAM', value: '64GB DDR5 6400MHz' },
+        { label: 'SSD', value: '2TB NVMe Gen4' },
+        { label: 'Alim', value: '1000W Platinum' }
+      ]
+    }
+  ];
+
+  const toggleFavorite = (index: number) => {
+    setFavorites(prev => 
+      prev.includes(index) 
+        ? prev.filter(i => i !== index)
+        : [...prev, index]
+    );
+  };
+
+  return (
+    <Layout>
+      <div className="container mx-auto px-8 pt-32 pb-20">
+        {/* Hero Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left Content */}
+          <motion.div 
+            className="space-y-6"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            {/* Badge */}
+            <motion.div 
+              className="inline-block px-4 py-1.5 bg-[#7C3AED]/10 border border-[#7C3AED]/30 rounded-full text-[#A855F7] text-sm font-medium"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring" }}
+            >
+              ⚡ Nouveau configurateur disponible
+            </motion.div>
+            
+            {/* Title */}
+            <h1 className="text-6xl font-bold text-[#F5F5F7] leading-tight tracking-tight">
+              Construis ton
+              <span className="block bg-gradient-to-r from-[#7C3AED] to-[#A855F7] bg-clip-text text-transparent">
+                PC Gaming Parfait
+              </span>
+            </h1>
+
+            {/* Description */}
+            <p className="text-lg text-[#A1A1AA] leading-relaxed max-w-xl">
+              Configure, compare et optimise ta machine de gaming avec notre outil intelligent. Des milliers de composants compatibles à portée de main.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex gap-4 pt-4">
+              <Link to="/configurateur">
+                <motion.button
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(124, 58, 237, 0.4)" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-3.5 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white rounded-lg font-semibold shadow-lg shadow-[#7C3AED]/30 flex items-center gap-2"
+                >
+                  <Cpu className="w-5 h-5" />
+                  Créer ma config
+                </motion.button>
+              </Link>
+              
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-3.5 bg-[#1a1a1a] border border-white/10 rounded-lg font-semibold text-[#F5F5F7] hover:bg-[#252525] transition-all duration-300"
+              >
+                Découvrir nos configs
+              </motion.button>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-8 pt-8">
+              {stats.map((stat, index) => (
+                <motion.div 
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 + index * 0.1 }}
+                >
+                  <div className="text-3xl font-bold text-[#F5F5F7]">
+                    <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+                  </div>
+                  <div className="text-[#A1A1AA] text-sm font-medium mt-1">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right Content - Featured Config Card */}
+          <motion.div 
+            className="relative"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-[#7C3AED]/20 to-[#A855F7]/20 rounded-2xl blur-3xl" />
+            <div className="relative bg-[#1a1a1a]/80 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
+              {/* Config Preview */}
+              <div className="w-full h-64 bg-[#0E0E10] rounded-xl mb-6 flex items-center justify-center border border-white/10 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(124,58,237,0.05)_25%,rgba(124,58,237,0.05)_50%,transparent_50%,transparent_75%,rgba(124,58,237,0.05)_75%)] bg-[length:20px_20px]" />
+                <motion.div
+                  animate={{ 
+                    rotateY: [0, 360],
+                  }}
+                  transition={{ 
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                >
+                  <Cpu className="w-24 h-24 text-[#7C3AED]/30 relative z-10" />
+                </motion.div>
+              </div>
+
+              <div className="space-y-4">
+                {/* Header */}
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-bold text-[#F5F5F7]">Config Recommandée</h3>
+                  <div className="flex items-center gap-1 px-3 py-1 bg-[#7C3AED]/10 rounded-full">
+                    <span className="text-[#F5F5F7] text-sm font-semibold">2499€</span>
+                  </div>
+                </div>
+
+                {/* Specs List */}
+                <div className="space-y-2.5">
+                  {featuredSpecs.map((item, index) => (
+                    <motion.div 
+                      key={item.component}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.6 + index * 0.1 }}
+                      className="flex items-center justify-between py-2 border-b border-white/10"
+                    >
+                      <span className="text-[#A1A1AA] text-sm font-medium">{item.component}</span>
+                      <span className="text-[#F5F5F7] text-sm">{item.name}</span>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* CTA Button */}
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full py-3 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white rounded-lg font-semibold shadow-lg shadow-[#7C3AED]/30 hover:shadow-[#7C3AED]/50 transition-all duration-300 mt-4"
+                >
+                  Voir la configuration
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Pre-built Configurations Section */}
+        <ScrollReveal delay={0.2}>
+          <div className="mt-24">
+            {/* Section Header */}
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-3xl font-bold text-[#F5F5F7]">Configurations Prêtes</h2>
+              <a href="#" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm font-medium transition-colors">
+                Voir toutes les configs →
+              </a>
+            </div>
+            
+            {/* Configurations Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {configurations.map((config, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1, duration: 0.6 }}
+                  whileHover={{ y: -8 }}
+                  className={`group relative bg-[#1a1a1a]/80 backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-[#7C3AED]/50 transition-all duration-300 cursor-pointer flex flex-col h-full shadow-xl ${config.glowColor}`}
+                >
+                  {/* Favorite Button */}
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => toggleFavorite(index)}
+                    className="absolute top-4 right-4 z-10 p-2 rounded-full bg-[#0E0E10]/80 backdrop-blur-sm border border-white/10 hover:border-[#7C3AED]/50 transition-all"
+                  >
+                    <Heart 
+                      className={`w-5 h-5 transition-all ${
+                        favorites.includes(index) 
+                          ? 'fill-[#7C3AED] text-[#7C3AED]' 
+                          : 'text-[#A1A1AA]'
+                      }`}
+                    />
+                  </motion.button>
+
+                  {/* Card Header - Fixed Height */}
+                  <div className="mb-6 min-h-[140px]">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-[#A1A1AA] text-xs font-semibold uppercase tracking-wider">
+                        {config.tier}
+                      </span>
+                      <div className={`px-3 py-1 rounded-full text-xs font-semibold border ${config.badgeColor}`}>
+                        {config.badge}
+                      </div>
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold text-[#F5F5F7] mb-2">{config.name}</h3>
+                    <div className="text-3xl font-bold bg-gradient-to-r from-[#7C3AED] to-[#A855F7] bg-clip-text text-transparent">
+                      {config.price}
+                    </div>
+                  </div>
+
+                  {/* Specs List - Fixed Height */}
+                  <div className="space-y-3 mb-6 min-h-[200px]">
+                    {config.specs.map((spec, specIndex) => (
+                      <div 
+                        key={specIndex} 
+                        className="flex items-center justify-between py-2 border-b border-white/5 last:border-0"
+                      >
+                        <span className="text-[#A1A1AA] text-sm font-medium">{spec.label}</span>
+                        <span className="text-[#F5F5F7] text-sm font-semibold text-right">{spec.value}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Spacer to push button to bottom */}
+                  <div className="flex-grow"></div>
+
+                  {/* CTA Button */}
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full py-3 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white rounded-lg font-semibold shadow-lg shadow-[#7C3AED]/20 hover:shadow-[#7C3AED]/40 transition-all duration-300 mb-4 relative overflow-hidden group"
+                  >
+                    <span className="relative z-10">Voir les détails</span>
+                    <motion.div
+                      className="absolute inset-0 bg-white/20"
+                      initial={{ x: '-100%' }}
+                      whileHover={{ x: '100%' }}
+                      transition={{ duration: 0.5 }}
+                    />
+                  </motion.button>
+
+                  {/* Performance Indicator */}
+                  <div className="pt-4 border-t border-white/5">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#A1A1AA]">Performance</span>
+                      <div className="flex gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ scaleX: 0 }}
+                            whileInView={{ scaleX: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.5 + i * 0.1 }}
+                            className={`w-6 h-1.5 rounded-full origin-left ${
+                              i < config.performance ? 'bg-gradient-to-r from-[#7C3AED] to-[#A855F7]' : 'bg-white/10'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+      </div>
+    </Layout>
+  );
+};

@@ -1,0 +1,163 @@
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Info, Cpu, Monitor, MemoryStick, HardDrive, Zap } from "lucide-react";
+import { fmt } from "../utils/priceFetcher";
+
+interface Component {
+  id: string;
+  name: string;
+  price: number;
+  brand: string;
+  specs: string[];
+  performance: number;
+  wattage?: number;
+  socket?: string;
+  generation?: string;
+  ramType?: string;
+  chipset?: string;
+  type?: string;
+  capacity?: number;
+  power?: number;
+  description?: string;
+  utility?: string;
+  domain?: string;
+}
+
+interface ComponentDetailModalProps {
+  component: Component | null;
+  onClose: () => void;
+  priceMap: Record<string, { ttc: number; vendor?: string; url?: string; fetchedAt: string; source: string }>;
+}
+
+export const ComponentDetailModal: React.FC<ComponentDetailModalProps> = ({ component, onClose, priceMap }) => {
+  if (!component) return null;
+
+  const externalPriceInfo = priceMap[component.name];
+  const displayPrice = externalPriceInfo?.ttc ?? component.price;
+
+  const getCategoryIcon = (componentName: string) => {
+    if (componentName.includes("Intel Core") || componentName.includes("Ryzen")) return <Cpu className="w-8 h-8 text-[#7C3AED]" />;
+    if (componentName.includes("RTX") || componentName.includes("Radeon")) return <Monitor className="w-8 h-8 text-[#7C3AED]" />;
+    if (componentName.includes("ASUS") || componentName.includes("MSI") || componentName.includes("Gigabyte") || componentName.includes("ASRock")) {
+      if (component.specs.some(s => s.includes("LGA") || s.includes("AM"))) return <Cpu className="w-8 h-8 text-[#7C3AED]" />; // Motherboard
+    }
+    if (componentName.includes("DDR")) return <MemoryStick className="w-8 h-8 text-[#7C3AED]" />;
+    if (componentName.includes("SSD") || componentName.includes("HDD")) return <HardDrive className="w-8 h-8 text-[#7C3AED]" />;
+    if (componentName.includes("W") && component.specs.some(s => s.includes("80+"))) return <Zap className="w-8 h-8 text-[#7C3AED]" />;
+    return <Info className="w-8 h-8 text-[#7C3AED]" />;
+  };
+
+  return (
+    <AnimatePresence>
+      {component && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ scale: 0.9, y: 50 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.9, y: 50 }}
+            transition={{ type: "spring", damping: 20, stiffness: 300 }}
+            className="relative bg-[#1a1a1a] rounded-2xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-white/10 shadow-2xl"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+          >
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 p-2 rounded-full bg-[#0E0E10] hover:bg-white/10 transition-colors text-[#A1A1AA]"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-6 mb-6">
+              <div className="w-24 h-24 bg-[#0E0E10] rounded-xl flex items-center justify-center border border-white/10 flex-shrink-0">
+                {getCategoryIcon(component.name)}
+              </div>
+              <div>
+                <span className="text-sm text-[#A1A1AA] uppercase tracking-wider">{component.brand}</span>
+                <h2 className="text-3xl font-bold text-[#F5F5F7] mt-1">{component.name}</h2>
+                <div className="text-2xl font-bold text-[#7C3AED] mt-2">{fmt(displayPrice)}</div>
+                {externalPriceInfo && (
+                  <div className="text-xs text-[#A1A1AA] mt-1">
+                    via <a className="underline text-[#7C3AED] hover:text-[#A855F7]" href={externalPriceInfo.url} target="_blank" rel="noopener noreferrer">
+                      {externalPriceInfo.vendor}
+                    </a>
+                    {" · "}{new Date(externalPriceInfo.fetchedAt).toLocaleString("fr-FR")}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              {component.description && (
+                <div>
+                  <h3 className="text-xl font-semibold text-[#F5F5F7] mb-2">Description</h3>
+                  <p className="text-[#A1A1AA] text-sm">{component.description}</p>
+                </div>
+              )}
+
+              {component.utility && (
+                <div>
+                  <h3 className="text-xl font-semibold text-[#F5F5F7] mb-2">Utilité</h3>
+                  <p className="text-[#A1A1AA] text-sm">{component.utility}</p>
+                </div>
+              )}
+
+              {component.domain && (
+                <div>
+                  <h3 className="text-xl font-semibold text-[#F5F5F7] mb-2">Domaine d'application</h3>
+                  <p className="text-[#A1A1AA] text-sm">{component.domain}</p>
+                </div>
+              )}
+
+              <div>
+                <h3 className="text-xl font-semibold text-[#F5F5F7] mb-2">Spécifications détaillées</h3>
+                <ul className="space-y-1 text-[#A1A1AA] text-sm">
+                  {component.specs.map((spec, index) => (
+                    <li key={index} className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 bg-[#7C3AED] rounded-full flex-shrink-0" />
+                      <span>{spec}</span>
+                    </li>
+                  ))}
+                  {component.performance && (
+                    <li className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 bg-[#7C3AED] rounded-full flex-shrink-0" />
+                      <span>Performance: {component.performance}%</span>
+                    </li>
+                  )}
+                  {component.wattage && component.wattage > 0 && (
+                    <li className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 bg-[#7C3AED] rounded-full flex-shrink-0" />
+                      <span>Consommation: {component.wattage}W</span>
+                    </li>
+                  )}
+                  {component.socket && (
+                    <li className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 bg-[#7C3AED] rounded-full flex-shrink-0" />
+                      <span>Socket: {component.socket}</span>
+                    </li>
+                  )}
+                  {component.ramType && (
+                    <li className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 bg-[#7C3AED] rounded-full flex-shrink-0" />
+                      <span>Type RAM: {component.ramType}</span>
+                    </li>
+                  )}
+                  {component.chipset && (
+                    <li className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 bg-[#7C3AED] rounded-full flex-shrink-0" />
+                      <span>Chipset: {component.chipset}</span>
+                    </li>
+                  )}
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};

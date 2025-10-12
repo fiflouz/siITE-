@@ -1,0 +1,72 @@
+import React, { useMemo } from "react";
+import { Loader2 } from "lucide-react";
+import {
+  getComponentsWithDetails,
+  type ComponentWithDetails,
+  type Category,
+} from "../../data/componentsData";
+
+type SortKey = "price-asc" | "price-desc" | "performance";
+
+interface Props {
+  category: Category;
+  search?: string;
+  sortBy?: SortKey;
+  realPrices?: Record<string, number>;
+  onPick?: (item: ComponentWithDetails) => void;
+}
+
+export default function Components({
+  category,
+  search = "",
+  sortBy = "price-asc",
+  realPrices,
+  onPick,
+}: Props) {
+  // 1) base = copie mutable (helper retourne déjà des copies)
+  const base = useMemo(() => getComponentsWithDetails(category), [category]);
+
+  // 2) merge des prix + filtre + tri, sans mutation
+  const list = useMemo(() => {
+    const merged = base.map((it) =>
+      realPrices?.[it.name] != null ? { ...it, price: realPrices[it.name]! } : it
+    );
+
+    const filtered = merged.filter((it) =>
+      it.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+    if (sortBy === "price-asc") return [...filtered].sort((a, b) => a.price - b.price);
+    if (sortBy === "price-desc") return [...filtered].sort((a, b) => b.price - a.price);
+    if (sortBy === "performance") return [...filtered].sort((a, b) => b.performance - a.performance);
+    return filtered;
+  }, [base, realPrices, search, sortBy]);
+
+  const handlePick = (it: ComponentWithDetails) => onPick?.({ ...it }); // renvoyer une copie
+
+  if (!list) {
+    return (
+      <div className="flex items-center gap-2 opacity-70">
+        <Loader2 className="size-4 animate-spin" />
+        Chargement…
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      {list.map((item) => (
+        <button
+          key={item.id}
+          onClick={() => handlePick(item)}
+          className="text-left rounded-2xl border p-4 hover:shadow-md transition"
+        >
+          <div className="font-medium">{item.name}</div>
+          <div className="text-xs opacity-70">{item.specs.join(" • ")}</div>
+          <div className="mt-2 text-lg font-semibold">{Math.round(item.price)}€</div>
+          <div className="text-xs">Perf: {item.performance}</div>
+        </button>
+      ))}
+    </div>
+  );
+}
