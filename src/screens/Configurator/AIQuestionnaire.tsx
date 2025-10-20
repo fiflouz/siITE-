@@ -1,6 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, ChevronLeft, Sparkles } from "lucide-react"; // Standard grouped import
+import { ChevronRight, ChevronLeft, Sparkles } from "lucide-react";
 
 interface Question {
   id: string;
