@@ -215,7 +215,7 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
 									animate={{ opacity: 1, y: 0 }}
 									exit={{ opacity: 0, y: -40 }}
 									transition={{ duration: 0.35, type: "spring" }}
-									className="w-full max-w-xl bg-[#232a38] rounded-3xl p-8 border border-[#232a38]/40 shadow-xl mb-8"
+									className="w-full max-w-xl bg-[#232a38] rounded-[2.5rem] p-8 border border-[#232a38]/40 shadow-xl mb-8"
 								>
 										<div className="flex flex-col sm:flex-row items-center gap-4 mb-8">
 											<div className="w-14 h-14 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-xl flex items-center justify-center shadow-lg">
