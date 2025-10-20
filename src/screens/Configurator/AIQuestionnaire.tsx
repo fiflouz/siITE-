@@ -36,20 +36,44 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
       question: "Quelle sera l'utilisation principale de votre PC ?",
       type: "choice",
       options: [
-        { value: "gaming", label: "Gaming", icon: "🎮" },
-        { value: "streaming", label: "Gaming + Streaming", icon: "📹" },
-        { value: "creation", label: "Création de contenu", icon: "🎨" },
-        { value: "work", label: "Travail + Gaming", icon: "💼" }
+        { value: "gaming_only", label: "Gaming uniquement", icon: "🎮" },
+        { value: "gaming_streaming", label: "Gaming + Streaming/Enregistrement", icon: "📹" },
+        { value: "gaming_creation", label: "Gaming + Création de contenu", icon: "🎨" },
+        { value: "gaming_work", label: "Gaming + Travail/Productivité", icon: "💼" },
+        { value: "professional", label: "Workstation professionnelle", icon: "🖥️" }
+      ]
+    },
+    {
+      id: "experience",
+      question: "Quel est votre niveau d'expérience en PC gaming ?",
+      type: "choice",
+      options: [
+        { value: "beginner", label: "Débutant - Mon premier PC gaming", icon: "🌱" },
+        { value: "intermediate", label: "Intermédiaire - Je connais les bases", icon: "�" },
+        { value: "advanced", label: "Avancé - Je sais ce que je veux", icon: "🎓" },
+        { value: "expert", label: "Expert - Performance maximale", icon: "⚡" }
       ]
     },
     {
       id: "budget",
-      question: "Quel est votre budget ?",
+      question: "Quel est votre budget total pour la configuration ?",
       type: "range",
       min: 500,
       max: 5000,
-      step: 100,
+      step: 50,
       unit: "€"
+    },
+    {
+      id: "priority",
+      question: "Quelle est votre priorité absolue ?",
+      type: "choice",
+      options: [
+        { value: "performance", label: "Performance maximale", icon: "🚀" },
+        { value: "balanced", label: "Équilibre performance/prix", icon: "⚖️" },
+        { value: "quiet", label: "Silence et températures", icon: "🔇" },
+        { value: "aesthetic", label: "Esthétique et RGB", icon: "✨" },
+        { value: "future_proof", label: "Évolutivité future", icon: "📈" }
+      ]
     },
     {
       id: "resolution",
@@ -57,60 +81,176 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
       type: "choice",
       options: [
         { value: "1080p", label: "1080p (Full HD)", icon: "📺" },
-        { value: "1440p", label: "1440p (2K)", icon: "🖥️" },
-        { value: "4k", label: "4K (Ultra HD)", icon: "📽️" }
+        { value: "1440p", label: "1440p (2K/QHD)", icon: "🖥️" },
+        { value: "4k", label: "4K (Ultra HD)", icon: "📽️" },
+        { value: "ultrawide", label: "Ultrawide (21:9)", icon: "🖼️" }
       ]
     },
     {
-      id: "fps",
-      question: "Quel framerate visez-vous ?",
+      id: "fps_target",
+      question: "Quel framerate ciblez-vous ?",
       type: "choice",
       options: [
-        { value: "60", label: "60 FPS", icon: "⚡" },
-        { value: "120", label: "120 FPS", icon: "⚡⚡" },
-        { value: "144+", label: "144+ FPS", icon: "⚡⚡⚡" }
+        { value: "60", label: "60 FPS - Expérience fluide", icon: "⚡" },
+        { value: "120", label: "120 FPS - Très fluide", icon: "⚡⚡" },
+        { value: "144", label: "144 FPS - Compétitif", icon: "🎯" },
+        { value: "240+", label: "240+ FPS - E-sport", icon: "🏆" }
       ]
     },
     {
-      id: "games",
+      id: "games_type",
       question: "Quels types de jeux jouez-vous principalement ?",
       type: "multiple",
       options: [
-        { value: "competitive", label: "Compétitif (FPS, MOBA)", icon: "🎯" },
-        { value: "aaa", label: "AAA (Cyberpunk, RDR2)", icon: "🌟" },
-        { value: "indie", label: "Indépendants", icon: "🎲" },
-        { value: "vr", label: "Réalité Virtuelle", icon: "🥽" }
+        { value: "competitive_fps", label: "FPS Compétitifs (CS2, Valorant)", icon: "🎯" },
+        { value: "battle_royale", label: "Battle Royale (Fortnite, Apex)", icon: "🎮" },
+        { value: "moba", label: "MOBA (LoL, Dota 2)", icon: "⚔️" },
+        { value: "aaa_story", label: "AAA Story (GTA, RDR2)", icon: "🌟" },
+        { value: "ray_tracing", label: "Jeux avec Ray Tracing", icon: "💎" },
+        { value: "simulation", label: "Simulation (Flight Sim, Racing)", icon: "�️" },
+        { value: "vr", label: "Réalité Virtuelle", icon: "🥽" },
+        { value: "indie", label: "Jeux indépendants", icon: "🎲" }
       ]
     },
     {
-      id: "storage",
+      id: "graphics_quality",
+      question: "Quelle qualité graphique privilégiez-vous ?",
+      type: "choice",
+      options: [
+        { value: "ultra", label: "Ultra - Maximum de détails", icon: "💎" },
+        { value: "high", label: "Élevé - Beau et performant", icon: "🌟" },
+        { value: "medium", label: "Moyen - Équilibré", icon: "⚖️" },
+        { value: "competitive", label: "Bas - FPS maximum", icon: "🏃" }
+      ]
+    },
+    {
+      id: "streaming",
+      question: "Prévoyez-vous de streamer ou enregistrer vos sessions ?",
+      type: "choice",
+      options: [
+        { value: "never", label: "Non, jamais", icon: "❌" },
+        { value: "occasionally", label: "Occasionnellement", icon: "📸" },
+        { value: "regularly", label: "Régulièrement", icon: "📹" },
+        { value: "professional", label: "Oui, c'est mon métier", icon: "🎬" }
+      ]
+    },
+    {
+      id: "multitasking",
+      question: "Combien de programmes utilisez-vous simultanément ?",
+      type: "choice",
+      options: [
+        { value: "single", label: "Jeu uniquement", icon: "1️⃣" },
+        { value: "light", label: "Jeu + Discord/Browser", icon: "2️⃣" },
+        { value: "moderate", label: "Jeu + Streaming + Browser", icon: "3️⃣" },
+        { value: "heavy", label: "Multitâche intensif", icon: "🔢" }
+      ]
+    },
+    {
+      id: "storage_needs",
       question: "De combien de stockage avez-vous besoin ?",
       type: "choice",
       options: [
-        { value: "500", label: "500 GB", icon: "💾" },
-        { value: "1000", label: "1 TB", icon: "💿" },
-        { value: "2000", label: "2 TB", icon: "📀" },
-        { value: "4000", label: "4 TB+", icon: "🗄️" }
+        { value: "500", label: "500 GB - Quelques jeux", icon: "💾" },
+        { value: "1000", label: "1 TB - Bibliothèque moyenne", icon: "💿" },
+        { value: "2000", label: "2 TB - Grande bibliothèque", icon: "📀" },
+        { value: "4000+", label: "4 TB+ - Énorme collection", icon: "🗄️" }
+      ]
+    },
+    {
+      id: "storage_type",
+      question: "Quel type de stockage préférez-vous ?",
+      type: "choice",
+      options: [
+        { value: "nvme_only", label: "SSD NVMe uniquement (rapide)", icon: "⚡" },
+        { value: "nvme_ssd", label: "NVMe + SSD SATA", icon: "💫" },
+        { value: "nvme_hdd", label: "NVMe + HDD (économique)", icon: "💰" }
+      ]
+    },
+    {
+      id: "brand_preference",
+      question: "Avez-vous une préférence de marque ?",
+      type: "choice",
+      options: [
+        { value: "amd", label: "AMD (Ryzen + Radeon)", icon: "🔴" },
+        { value: "intel_nvidia", label: "Intel + NVIDIA", icon: "🔵" },
+        { value: "best_performance", label: "Meilleure performance", icon: "🏆" },
+        { value: "best_value", label: "Meilleur rapport qualité/prix", icon: "💰" },
+        { value: "no_preference", label: "Aucune préférence", icon: "🤷" }
+      ]
+    },
+    {
+      id: "cooling",
+      question: "Quel type de refroidissement souhaitez-vous ?",
+      type: "choice",
+      options: [
+        { value: "air", label: "Air - Simple et fiable", icon: "🌬️" },
+        { value: "aio", label: "AIO - Watercooling tout-en-un", icon: "💧" },
+        { value: "quiet_priority", label: "Le plus silencieux possible", icon: "🔇" },
+        { value: "performance_priority", label: "Performance maximale", icon: "❄️" }
       ]
     },
     {
       id: "rgb",
-      question: "Souhaitez-vous un éclairage RGB ?",
+      question: "Quelle importance accordez-vous à l'esthétique ?",
       type: "choice",
       options: [
-        { value: "yes", label: "Oui, j'adore le RGB", icon: "🌈" },
-        { value: "minimal", label: "Un peu, mais sobre", icon: "✨" },
-        { value: "no", label: "Non, performance avant tout", icon: "⚫" }
+        { value: "full_rgb", label: "RGB partout - Spectacle visuel", icon: "🌈" },
+        { value: "subtle_rgb", label: "RGB sobre et élégant", icon: "✨" },
+        { value: "minimal", label: "Design minimaliste", icon: "⬛" },
+        { value: "none", label: "Performance pure - 0 RGB", icon: "⚫" }
       ]
     },
     {
-      id: "upgrade",
-      question: "Prévoyez-vous d'upgrader dans le futur ?",
+      id: "noise_tolerance",
+      question: "Quelle est votre tolérance au bruit ?",
       type: "choice",
       options: [
-        { value: "yes", label: "Oui, je veux de la marge", icon: "📈" },
-        { value: "maybe", label: "Peut-être", icon: "🤔" },
-        { value: "no", label: "Non, config finale", icon: "🔒" }
+        { value: "silent", label: "Silence absolu prioritaire", icon: "🔇" },
+        { value: "quiet", label: "Discret si possible", icon: "🤫" },
+        { value: "moderate", label: "Acceptable", icon: "🔊" },
+        { value: "dont_care", label: "Peu m'importe", icon: "🔊" }
+      ]
+    },
+    {
+      id: "upgrade_plan",
+      question: "Prévoyez-vous d'upgrader votre config ?",
+      type: "choice",
+      options: [
+        { value: "never", label: "Non, config finale pour 5+ ans", icon: "🔒" },
+        { value: "later", label: "Peut-être dans 2-3 ans", icon: "🤔" },
+        { value: "soon", label: "Oui, dans 1-2 ans", icon: "📈" },
+        { value: "regular", label: "Oui, régulièrement", icon: "🔄" }
+      ]
+    },
+    {
+      id: "future_proofing",
+      question: "Souhaitez-vous être prêt pour les futures technologies ?",
+      type: "choice",
+      options: [
+        { value: "max", label: "Oui, je veux le top pour longtemps", icon: "🚀" },
+        { value: "yes", label: "Oui, dans la limite du budget", icon: "📈" },
+        { value: "moderate", label: "Un peu, sans excès", icon: "⚖️" },
+        { value: "no", label: "Non, juste pour maintenant", icon: "⏱️" }
+      ]
+    },
+    {
+      id: "wifi_need",
+      question: "Avez-vous besoin du WiFi intégré ?",
+      type: "choice",
+      options: [
+        { value: "ethernet", label: "Non, j'utilise Ethernet", icon: "🔌" },
+        { value: "wifi6", label: "Oui, WiFi 6/6E", icon: "📡" },
+        { value: "wifi7", label: "Oui, WiFi 7 (dernière génération)", icon: "🛜" }
+      ]
+    },
+    {
+      id: "monitor_ready",
+      question: "Avez-vous déjà un moniteur ?",
+      type: "choice",
+      options: [
+        { value: "yes_matching", label: "Oui, adapté à mes besoins", icon: "✅" },
+        { value: "yes_upgrade", label: "Oui, mais prévu de changer", icon: "🔄" },
+        { value: "no", label: "Non, besoin de conseils", icon: "❓" }
       ]
     }
   ];
