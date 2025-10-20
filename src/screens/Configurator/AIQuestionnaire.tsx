@@ -179,156 +179,156 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
 		}
 	};
 
-	return (
-		<div className="max-w-4xl mx-auto">
-			<div className="mb-12">
-				<div className="flex items-center justify-between mb-2">
-					<span className="text-sm text-[#A1A1AA]">Question {currentQuestion + 1} sur {questions.length}</span>
-					<span className="text-sm font-semibold text-[#4F8BF7]">{Math.round(progress)}%</span>
+		return (
+			<div className="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#0e1a2f] via-[#1a2747] to-[#4F8BF7] py-8 px-2 sm:px-0">
+				{/* Header modernisé */}
+				<div className="w-full max-w-2xl flex flex-col items-center mb-10">
+					<div className="flex items-center gap-3 mb-2">
+						<Sparkles className="w-8 h-8 text-[#4F8BF7] drop-shadow-lg animate-pulse" />
+						<h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-lg">Configurateur IA</h1>
+					</div>
+					<p className="text-[#b6c6e3] text-center text-lg sm:text-xl max-w-xl">Répondez à quelques questions pour générer la configuration PC idéale selon vos besoins et votre style !</p>
 				</div>
-				<div className="w-full h-2 bg-[#1a1a1a] rounded-full overflow-hidden">
+
+				{/* Progress bar stylisée */}
+				<div className="w-full max-w-2xl mb-8">
+					<div className="flex items-center justify-between mb-1">
+						<span className="text-xs text-[#b6c6e3]">Question {currentQuestion + 1} / {questions.length}</span>
+						<span className="text-xs font-bold text-[#4F8BF7]">{Math.round(progress)}%</span>
+					</div>
+					<div className="w-full h-3 bg-[#1a2747] rounded-full overflow-hidden shadow-inner">
+						<motion.div
+							initial={{ width: 0 }}
+							animate={{ width: `${progress}%` }}
+							transition={{ duration: 0.5 }}
+							className="h-full bg-gradient-to-r from-[#4F8BF7] via-[#6B9CFF] to-[#b6c6e3] shadow-lg rounded-full"
+						/>
+					</div>
+				</div>
+
+				{/* Carte question + options */}
+				<AnimatePresence mode="wait">
 					<motion.div
-						initial={{ width: 0 }}
-						animate={{ width: `${progress}%` }}
-						transition={{ duration: 0.5 }}
-						className="h-full bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF]"
-					/>
+						key={currentQuestion}
+						initial={{ opacity: 0, y: 40 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: -40 }}
+						transition={{ duration: 0.35, type: "spring" }}
+						className="w-full max-w-2xl bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl mb-8"
+					>
+						<div className="flex flex-col sm:flex-row items-center gap-4 mb-8">
+							<div className="w-14 h-14 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-2xl flex items-center justify-center shadow-lg">
+								<Sparkles className="w-7 h-7 text-white" />
+							</div>
+							<div className="flex-1">
+								<h2 className="text-2xl sm:text-3xl font-bold text-white mb-1 drop-shadow">{currentQ.question}</h2>
+								<p className="text-[#b6c6e3] text-base">Sélectionnez l'option qui vous correspond le mieux</p>
+							</div>
+						</div>
+
+						<div className="space-y-4">
+							{currentQ.type === "choice" && currentQ.options && (
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+									{currentQ.options.map((option) => {
+										const isSelected = answers[currentQ.id] === option.value;
+										return (
+											<motion.button
+												key={option.value}
+												whileHover={{ scale: 1.03, y: -2 }}
+												whileTap={{ scale: 0.97 }}
+												onClick={() => handleAnswer(option.value)}
+												className={`group p-6 rounded-2xl text-left transition-all duration-200 border-2 flex items-center gap-4 shadow-md focus:outline-none focus:ring-2 focus:ring-[#4F8BF7] ${
+													isSelected
+														? 'bg-gradient-to-br from-[#4F8BF7]/80 to-[#6B9CFF]/80 border-[#4F8BF7] shadow-xl scale-105'
+														: 'bg-[#0E0E10]/80 border-white/10 hover:border-[#4F8BF7]/60'
+												}`}
+											>
+												<span className="text-3xl sm:text-4xl drop-shadow-lg">{option.icon}</span>
+												<span className="text-lg font-semibold text-white block group-hover:text-[#4F8BF7] transition-colors duration-200">
+													{option.label}
+												</span>
+											</motion.button>
+										);
+									})}
+								</div>
+							)}
+
+							{currentQ.type === "multiple" && currentQ.options && (
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+									{currentQ.options.map((option) => {
+										const isSelected = answers[currentQ.id]?.includes(option.value);
+										return (
+											<motion.button
+												key={option.value}
+												whileHover={{ scale: 1.03, y: -2 }}
+												whileTap={{ scale: 0.97 }}
+												onClick={() => handleAnswer(option.value)}
+												className={`group p-6 rounded-2xl text-left transition-all duration-200 border-2 flex items-center gap-4 shadow-md focus:outline-none focus:ring-2 focus:ring-[#4F8BF7] ${
+													isSelected
+														? 'bg-gradient-to-br from-[#4F8BF7]/80 to-[#6B9CFF]/80 border-[#4F8BF7] shadow-xl scale-105'
+														: 'bg-[#0E0E10]/80 border-white/10 hover:border-[#4F8BF7]/60'
+												}`}
+											>
+												<span className="text-3xl sm:text-4xl drop-shadow-lg">{option.icon}</span>
+												<span className="text-lg font-semibold text-white block group-hover:text-[#4F8BF7] transition-colors duration-200">
+													{option.label}
+												</span>
+											</motion.button>
+										);
+									})}
+								</div>
+							)}
+
+							{currentQ.type === "range" && (
+								<div className="space-y-6">
+									<div className="text-center">
+										<span className="text-5xl font-extrabold bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] bg-clip-text text-transparent drop-shadow-lg">
+											{answers[currentQ.id] || currentQ.min}{currentQ.unit}
+										</span>
+									</div>
+									<input
+										type="range"
+										min={currentQ.min}
+										max={currentQ.max}
+										step={currentQ.step}
+										value={answers[currentQ.id] || currentQ.min}
+										onChange={(e) => handleAnswer(parseInt(e.target.value))}
+										className="w-full h-4 bg-[#0E0E10]/80 rounded-full appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#4F8BF7] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-7 [&::-webkit-slider-thumb]:h-7 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r [&::-webkit-slider-thumb]:from-[#4F8BF7] [&::-webkit-slider-thumb]:to-[#6B9CFF] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:shadow-[#4F8BF7]/50"
+									/>
+									<div className="flex justify-between text-sm text-[#b6c6e3]">
+										<span>{currentQ.min}{currentQ.unit}</span>
+										<span>{currentQ.max}{currentQ.unit}</span>
+									</div>
+								</div>
+							)}
+						</div>
+					</motion.div>
+				</AnimatePresence>
+
+				{/* Navigation */}
+				<div className="w-full max-w-2xl flex items-center justify-between mt-2">
+					<motion.button
+						whileHover={{ scale: 1.07 }}
+						whileTap={{ scale: 0.95 }}
+						onClick={onPrevious}
+						disabled={currentQuestion === 0}
+						className="px-7 py-3 bg-[#1a2747]/80 border border-white/10 text-white rounded-xl font-semibold hover:bg-[#4F8BF7]/20 transition-all flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed shadow"
+					>
+						<ChevronLeft className="w-5 h-5" />
+						Précédent
+					</motion.button>
+
+					<motion.button
+						whileHover={{ scale: 1.07 }}
+						whileTap={{ scale: 0.95 }}
+						onClick={handleNext}
+						disabled={!isAnswered()}
+						className="px-7 py-3 bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] text-white rounded-xl font-semibold shadow-lg shadow-[#4F8BF7]/30 flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+					>
+						{currentQuestion === questions.length - 1 ? "Voir ma config" : "Suivant"}
+						<ChevronRight className="w-5 h-5" />
+					</motion.button>
 				</div>
 			</div>
-
-			<AnimatePresence mode="wait">
-				<motion.div
-					key={currentQuestion}
-					initial={{ opacity: 0, x: 50 }}
-					animate={{ opacity: 1, x: 0 }}
-					exit={{ opacity: 0, x: -50 }}
-					transition={{ duration: 0.3 }}
-					className="bg-[#1a1a1a]/80 backdrop-blur-xl rounded-2xl p-8 border border-white/10 mb-8"
-				>
-					<div className="flex items-start gap-4 mb-8">
-						<div className="w-12 h-12 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-xl flex items-center justify-center flex-shrink-0">
-							<Sparkles className="w-6 h-6 text-white" />
-						</div>
-						<div>
-							<h2 className="text-3xl font-bold text-[#F5F5F7] mb-2">
-								{currentQ.question}
-							</h2>
-							<p className="text-[#A1A1AA]">
-								Sélectionnez l'option qui vous correspond le mieux
-							</p>
-						</div>
-					</div>
-
-					<div className="space-y-4">
-						{currentQ.type === "choice" && currentQ.options && (
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								{currentQ.options.map((option) => {
-									const isSelected = answers[currentQ.id] === option.value;
-									return (
-										<motion.button
-											key={option.value}
-											whileHover={{ scale: 1.02, y: -4 }}
-											whileTap={{ scale: 0.98 }}
-											onClick={() => handleAnswer(option.value)}
-											className={`p-6 rounded-xl text-left transition-all ${
-												isSelected
-													? 'bg-[#4F8BF7]/20 border-2 border-[#4F8BF7] shadow-lg shadow-[#4F8BF7]/20'
-													: 'bg-[#0E0E10] border border-white/10 hover:border-[#4F8BF7]/50'
-											}`}
-										>
-											<div className="flex items-center gap-4">
-												<span className="text-4xl">{option.icon}</span>
-												<div>
-													<span className="text-lg font-semibold text-[#F5F5F7] block">
-														{option.label}
-													</span>
-												</div>
-											</div>
-										</motion.button>
-									);
-								})}
-							</div>
-						)}
-
-						{currentQ.type === "multiple" && currentQ.options && (
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								{currentQ.options.map((option) => {
-									const isSelected = answers[currentQ.id]?.includes(option.value);
-									return (
-										<motion.button
-											key={option.value}
-											whileHover={{ scale: 1.02, y: -4 }}
-											whileTap={{ scale: 0.98 }}
-											onClick={() => handleAnswer(option.value)}
-											className={`p-6 rounded-xl text-left transition-all ${
-												isSelected
-													? 'bg-[#4F8BF7]/20 border-2 border-[#4F8BF7] shadow-lg shadow-[#4F8BF7]/20'
-													: 'bg-[#0E0E10] border border-white/10 hover:border-[#4F8BF7]/50'
-											}`}
-										>
-											<div className="flex items-center gap-4">
-												<span className="text-4xl">{option.icon}</span>
-												<div>
-													<span className="text-lg font-semibold text-[#F5F5F7] block">
-														{option.label}
-													</span>
-												</div>
-											</div>
-										</motion.button>
-									);
-								})}
-							</div>
-						)}
-
-						{currentQ.type === "range" && (
-							<div className="space-y-6">
-								<div className="text-center">
-									<span className="text-5xl font-bold bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] bg-clip-text text-transparent">
-										{answers[currentQ.id] || currentQ.min}{currentQ.unit}
-									</span>
-								</div>
-								<input
-									type="range"
-									min={currentQ.min}
-									max={currentQ.max}
-									step={currentQ.step}
-									value={answers[currentQ.id] || currentQ.min}
-									onChange={(e) => handleAnswer(parseInt(e.target.value))}
-									className="w-full h-3 bg-[#0E0E10] rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r [&::-webkit-slider-thumb]:from-[#4F8BF7] [&::-webkit-slider-thumb]:to-[#6B9CFF] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:shadow-[#4F8BF7]/50"
-								/>
-								<div className="flex justify-between text-sm text-[#A1A1AA]">
-									<span>{currentQ.min}{currentQ.unit}</span>
-									<span>{currentQ.max}{currentQ.unit}</span>
-								</div>
-							</div>
-						)}
-					</div>
-				</motion.div>
-			</AnimatePresence>
-
-			<div className="flex items-center justify-between">
-				<motion.button
-					whileHover={{ scale: 1.05 }}
-					whileTap={{ scale: 0.95 }}
-					onClick={onPrevious}
-					disabled={currentQuestion === 0}
-					className="px-6 py-3 bg-[#1a1a1a] border border-white/10 text-[#F5F5F7] rounded-lg font-semibold hover:bg-[#252525] transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-				>
-					<ChevronLeft className="w-5 h-5" />
-					Précédent
-				</motion.button>
-
-				<motion.button
-					whileHover={{ scale: 1.05 }}
-					whileTap={{ scale: 0.95 }}
-					onClick={handleNext}
-					disabled={!isAnswered()}
-					className="px-6 py-3 bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] text-white rounded-lg font-semibold shadow-lg shadow-[#4F8BF7]/30 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-				>
-					{currentQuestion === questions.length - 1 ? "Voir ma config" : "Suivant"}
-					<ChevronRight className="w-5 h-5" />
-				</motion.button>
-			</div>
-		</div>
-	);
-};
+		);
+	};
