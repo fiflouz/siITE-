@@ -180,7 +180,7 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
 	};
 
 		return (
-			<div className="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#0e1a2f] via-[#1a2747] to-[#4F8BF7] py-8 px-2 sm:px-0">
+			<div className="relative min-h-screen flex flex-col items-center justify-center bg-[#181e29] py-8 px-2 sm:px-0">
 				{/* Header modernisé */}
 				<div className="w-full max-w-2xl flex flex-col items-center mb-10">
 					<div className="flex items-center gap-3 mb-2">
@@ -207,24 +207,25 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
 				</div>
 
 				{/* Carte question + options */}
-				<AnimatePresence mode="wait">
-					<motion.div
-						key={currentQuestion}
-						initial={{ opacity: 0, y: 40 }}
-						animate={{ opacity: 1, y: 0 }}
-						exit={{ opacity: 0, y: -40 }}
-						transition={{ duration: 0.35, type: "spring" }}
-						className="w-full max-w-2xl bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl mb-8"
-					>
-						<div className="flex flex-col sm:flex-row items-center gap-4 mb-8">
-							<div className="w-14 h-14 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-2xl flex items-center justify-center shadow-lg">
-								<Sparkles className="w-7 h-7 text-white" />
-							</div>
-							<div className="flex-1">
-								<h2 className="text-2xl sm:text-3xl font-bold text-white mb-1 drop-shadow">{currentQ.question}</h2>
-								<p className="text-[#b6c6e3] text-base">Sélectionnez l'option qui vous correspond le mieux</p>
-							</div>
-						</div>
+						<div className="w-full flex justify-center">
+							<AnimatePresence mode="wait">
+								<motion.div
+									key={currentQuestion}
+									initial={{ opacity: 0, y: 40 }}
+									animate={{ opacity: 1, y: 0 }}
+									exit={{ opacity: 0, y: -40 }}
+									transition={{ duration: 0.35, type: "spring" }}
+									className="w-full max-w-xl bg-[#232a38] rounded-2xl p-8 border border-[#232a38] shadow-xl mb-8"
+								>
+										<div className="flex flex-col sm:flex-row items-center gap-4 mb-8">
+											<div className="w-14 h-14 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-xl flex items-center justify-center shadow-lg">
+												<Sparkles className="w-7 h-7 text-white" />
+											</div>
+											<div className="flex-1">
+												<h2 className="text-2xl sm:text-3xl font-bold text-white mb-1 drop-shadow">{currentQ.question}</h2>
+												<p className="text-[#b6c6e3] text-base">Sélectionnez l'option qui vous correspond le mieux</p>
+											</div>
+										</div>
 
 						<div className="space-y-4">
 							{currentQ.type === "choice" && currentQ.options && (
@@ -303,7 +304,8 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
 							)}
 						</div>
 					</motion.div>
-				</AnimatePresence>
+							</AnimatePresence>
+						</div>
 
 				{/* Navigation */}
 				<div className="w-full max-w-2xl flex items-center justify-between mt-2">
