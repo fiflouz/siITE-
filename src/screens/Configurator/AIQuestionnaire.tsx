@@ -180,9 +180,9 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
 	};
 
 		return (
-			<div className="relative min-h-screen flex flex-col items-center justify-center bg-[#181e29] py-8 px-2 sm:px-0">
+			<div className="relative min-h-screen flex flex-col items-center justify-center bg-[#181e29] py-8 px-2 sm:px-0 rounded-lg">
 				{/* Header modernisé */}
-				<div className="w-full max-w-2xl flex flex-col items-center mb-10">
+				<div className="w-full max-w-2xl flex flex-col items-center mb-10 bg-[#232a38] rounded-lg shadow-md p-4">
 					<div className="flex items-center gap-3 mb-2">
 						<Sparkles className="w-8 h-8 text-[#4F8BF7] drop-shadow-lg animate-pulse" />
 						<h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-lg">Configurateur IA</h1>
@@ -191,7 +191,7 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
 				</div>
 
 				{/* Progress bar stylisée */}
-				<div className="w-full max-w-2xl mb-8">
+				<div className="w-full max-w-2xl mb-8 bg-[#232a38] rounded-lg shadow-md p-3">
 					<div className="flex items-center justify-between mb-1">
 						<span className="text-xs text-[#b6c6e3]">Question {currentQuestion + 1} / {questions.length}</span>
 						<span className="text-xs font-bold text-[#4F8BF7]">{Math.round(progress)}%</span>
@@ -215,10 +215,10 @@ export const AIQuestionnaire: React.FC<AIQuestionnaireProps> = ({
 									animate={{ opacity: 1, y: 0 }}
 									exit={{ opacity: 0, y: -40 }}
 									transition={{ duration: 0.35, type: "spring" }}
-									className="w-full max-w-xl bg-[#232a38] rounded-full p-8 border border-[#232a38]/40 shadow-xl mb-8"
+									className="w-full max-w-xl bg-[#232a38] rounded-lg p-8 border border-[#232a38]/40 shadow-xl mb-8"
 								>
 										<div className="flex flex-col sm:flex-row items-center gap-4 mb-8">
-											<div className="w-14 h-14 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-xl flex items-center justify-center shadow-lg">
+									<div className="w-14 h-14 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-lg flex items-center justify-center shadow-lg">
 												<Sparkles className="w-7 h-7 text-white" />
 											</div>
 											<div className="flex-1">
