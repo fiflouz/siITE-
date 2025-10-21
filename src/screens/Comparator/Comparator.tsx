@@ -111,13 +111,13 @@ export const Comparator = () => {
                   key={config.id}
                   whileHover={{ y: -4 }}
                   onClick={() => addConfig(config)}
-                  className="p-6 bg-[#1a1a1a] border border-white/10 rounded-xl cursor-pointer hover:border-[#4F8BF7]/50 transition-all"
+                  className="p-6 bg-[#1a1a1a] border border-white/10 rounded-xl cursor-pointer hover:border-[#4A90E2]/50 transition-all"
                 >
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-lg font-bold text-[#F5F5F7]">{config.name}</h3>
-                    <Plus className="w-5 h-5 text-[#4F8BF7]" />
+                    <Plus className="w-5 h-5 text-[#4A90E2]" />
                   </div>
-                  <p className="text-2xl font-bold text-[#4F8BF7] mb-2">{config.price}€</p>
+                  <p className="text-2xl font-bold text-[#4A90E2] mb-2">{config.price}€</p>
                   <p className="text-sm text-[#A1A1AA]">Performance: {config.performance}%</p>
                 </motion.div>
               ))}
@@ -148,7 +148,7 @@ export const Comparator = () => {
                           <X className="w-4 h-4 text-[#A1A1AA] hover:text-red-500" />
                         </motion.button>
                         <div className="text-xl font-bold text-[#F5F5F7] mb-2">{config.name}</div>
-                        <div className="text-2xl font-bold bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] bg-clip-text text-transparent">
+                        <div className="text-2xl font-bold bg-gradient-to-r from-[#4A90E2] to-[#5BA3F5] bg-clip-text text-transparent">
                           {config.price}€
                         </div>
                       </th>
@@ -165,7 +165,7 @@ export const Comparator = () => {
                           <span className="text-lg font-bold text-[#F5F5F7]">{config.performance}%</span>
                           <div className="w-full h-2 bg-[#0E0E10] rounded-full overflow-hidden">
                             <div
-                              className="h-full bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF]"
+                              className="h-full bg-gradient-to-r from-[#4A90E2] to-[#5BA3F5]"
                               style={{ width: `${config.performance}%` }}
                             />
                           </div>

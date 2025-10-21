@@ -1,10 +1,9 @@
 import { useMemo } from "react";
 import { Loader2 } from "lucide-react";
-import {
-  getComponentsWithDetails,
-  type ComponentWithDetails,
-  type Category,
-} from "../../data/componentsData";
+import { componentsByCategory, type MappedComponent } from "../../data/componentsData";
+import type { Category } from "../../data/catalogueTypes";
+
+
 
 type SortKey = "price-asc" | "price-desc" | "performance";
 
@@ -13,9 +12,8 @@ interface Props {
   search?: string;
   sortBy?: SortKey;
   realPrices?: Record<string, number>;
-  onPick?: (item: ComponentWithDetails) => void;
+  onPick?: (item: MappedComponent) => void;
 }
-
 export default function Components({
   category,
   search = "",
@@ -23,8 +21,16 @@ export default function Components({
   realPrices,
   onPick,
 }: Props) {
-  // 1) base = copie mutable (helper retourne déjà des copies)
-  const base = useMemo(() => getComponentsWithDetails(category), [category]);
+  // 1) base = accès direct au catalogue typé
+  const base = useMemo(() => componentsByCategory[category], [category]);
+
+  if (!base) {
+    return (
+      <div className="text-center text-red-500 py-12">
+        Catégorie inconnue : <b>{category}</b>
+      </div>
+    );
+  }
 
   // 2) merge des prix + filtre + tri, sans mutation
   const list = useMemo(() => {
@@ -42,31 +48,36 @@ export default function Components({
     return filtered;
   }, [base, realPrices, search, sortBy]);
 
-  const handlePick = (it: ComponentWithDetails) => onPick?.({ ...it }); // renvoyer une copie
+  const handlePick = (it: MappedComponent) => onPick?.({ ...it }); // renvoyer une copie
 
-  if (!list) {
+  if (!list.length) {
     return (
-      <div className="flex items-center gap-2 opacity-70">
-        <Loader2 className="size-4 animate-spin" />
-        Chargement…
+      <div className="text-center text-[#A1A1AA] py-12">
+        Aucun composant trouvé pour la catégorie <b>{category}</b>.
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-      {list.map((item) => (
-        <button
-          key={item.id}
-          onClick={() => handlePick(item)}
-          className="text-left rounded-2xl border p-4 hover:shadow-md transition"
-        >
-          <div className="font-medium">{item.name}</div>
-          <div className="text-xs opacity-70">{item.specs.join(" • ")}</div>
-          <div className="mt-2 text-lg font-semibold">{Math.round(item.price)}€</div>
-          <div className="text-xs">Perf: {item.performance}</div>
-        </button>
-      ))}
-    </div>
+    <>
+      <div className="bg-yellow-100 text-yellow-900 p-4 mb-4 rounded">
+        <b>Debug catalogue :</b> {list.length} composants chargés.<br />
+        <pre style={{ fontSize: "0.8em", maxHeight: 200, overflow: "auto" }}>{JSON.stringify(list[0], null, 2)}</pre>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        {list.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => handlePick(item)}
+            className="text-left rounded-2xl border p-4 hover:shadow-md transition"
+          >
+            <div className="font-medium">{item.name}</div>
+            <div className="text-xs opacity-70">{item.specs.join(" • ")}</div>
+            <div className="mt-2 text-lg font-semibold">{Math.round(item.price)}€</div>
+            <div className="text-xs">Perf: {item.performance}</div>
+          </button>
+        ))}
+      </div>
+    </>
   );
 }

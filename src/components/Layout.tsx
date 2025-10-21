@@ -1,7 +1,9 @@
 import { useState, type ReactNode } from "react";
-import { motion } from "framer-motion";
-import { Cpu, User } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Cpu, User, LogOut, Settings, Heart, Save, ChevronDown, Star } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
+import { AuthModal } from "./AuthModal";
+import { useAuth } from "../contexts/AuthContext";
 import { Link, useLocation } from "react-router-dom";
 
 interface LayoutProps {
@@ -10,7 +12,9 @@ interface LayoutProps {
 
 export const Layout = ({ children }: LayoutProps) => {
   const [isHeaderHovered, setIsHeaderHovered] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const { user, isLoggedIn, logout } = useAuth();
   const location = useLocation();
 
   const navigationItems = [
@@ -23,76 +27,155 @@ export const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-[#0E0E10] relative overflow-hidden">
       {/* Background Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:50px_50px]" />
-      
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(74, 144, 226, 0.1) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(74, 144, 226, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '30px 30px'
+        }}
+      />
+
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0E0E10]/50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0E0E10]/30" />
 
       {/* Header */}
       <div className="fixed top-8 left-0 right-0 z-50 flex justify-center">
-        <motion.header 
+        <motion.header
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className={`flex items-center gap-8 px-12 py-4 border border-white/10 bg-[#1a1a1a]/80 backdrop-blur-xl rounded-2xl transition-all duration-300 ease-out ${
-            isHeaderHovered ? 'scale-110 shadow-2xl shadow-black/50' : 'scale-100'
-          }`}
-          onMouseEnter={() => setIsHeaderHovered(true)}
-          onMouseLeave={() => setIsHeaderHovered(false)}
+          className={`flex items-center gap-8 px-12 py-4 border border-white/10 bg-[#1a1a1a]/80 backdrop-blur-xl rounded-2xl transition-all duration-300 ease-out ${isHeaderHovered ? 'shadow-2xl shadow-[#4A90E2]/20 border-[#4A90E2]/30' : 'shadow-lg shadow-black/20'
+            }`}
+          onHoverStart={() => setIsHeaderHovered(true)}
+          onHoverEnd={() => setIsHeaderHovered(false)}
         >
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <motion.div 
-              className="w-10 h-10 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-lg flex items-center justify-center"
+          <Link
+            to="/"
+            className="flex items-center gap-3 text-[#F5F5F7] hover:text-[#4A90E2] transition-colors"
+          >
+            <motion.div
               whileHover={{ rotate: 360 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.5 }}
+              className="w-8 h-8 bg-gradient-to-br from-[#4A90E2] to-[#5BA3F5] rounded-lg flex items-center justify-center"
             >
-              <Cpu className="w-6 h-6 text-white" />
+              <Cpu className="w-5 h-5 text-white" />
             </motion.div>
-            <span className="text-xl font-bold text-[#F5F5F7] tracking-tight">
-              PC Builder
-            </span>
+            <span className="text-xl font-bold tracking-tight">siITE</span>
           </Link>
 
           {/* Navigation */}
-          <nav className="flex items-center gap-8">
-            {navigationItems.map((item) => (
+          <nav className="flex items-center gap-6">
+            {navigationItems.map(item => (
               <Link
                 key={item.name}
                 to={item.path}
-                className="text-[#A1A1AA] hover:text-[#F5F5F7] transition-all duration-200 text-sm font-medium relative group"
+                className={`px-4 py-2 rounded-lg font-medium transition-all ${location.pathname === item.path
+                    ? 'bg-gradient-to-br from-[#4A90E2] to-[#5BA3F5] text-white shadow-lg shadow-[#4A90E2]/30'
+                    : 'text-[#A1A1AA] hover:text-[#F5F5F7] hover:bg-white/5'
+                  }`}
               >
                 {item.name}
-                <motion.span 
-                  className="absolute -bottom-1 left-0 h-px bg-[#4F8BF7]"
-                  initial={{ width: 0 }}
-                  animate={{ width: location.pathname === item.path ? '100%' : 0 }}
-                  transition={{ duration: 0.3 }}
-                />
               </Link>
             ))}
           </nav>
 
-          {/* Right Section */}
+          {/* Right side actions */}
           <div className="flex items-center gap-4">
             <ThemeToggle />
-            
+
+            {/* User Authentication */}
             {isLoggedIn ? (
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] flex items-center justify-center"
-              >
-                <User className="w-5 h-5 text-white" />
-              </motion.button>
+              <div className="relative">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-[#4A90E2] to-[#5BA3F5] rounded-full text-white font-medium shadow-lg shadow-[#4A90E2]/30"
+                >
+                  <User className="w-4 h-4" />
+                  <span className="text-sm">{user?.username || 'Utilisateur'}</span>
+                  <ChevronDown className={`w-4 h-4 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
+                </motion.button>
+
+                {/* User Menu Dropdown */}
+                <AnimatePresence>
+                  {isUserMenuOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="absolute right-0 top-full mt-2 w-56 bg-[#1a1a1a]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-xl z-50"
+                    >
+                      <div className="p-2">
+                        <Link
+                          to="/dashboard"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="w-full flex items-center gap-3 px-3 py-2 text-[#A1A1AA] hover:text-[#F5F5F7] hover:bg-white/5 rounded-lg transition-colors"
+                        >
+                          <User className="w-4 h-4" />
+                          <span>Tableau de bord</span>
+                        </Link>
+                        <Link
+                          to="/favoris"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="w-full flex items-center gap-3 px-3 py-2 text-[#A1A1AA] hover:text-[#F5F5F7] hover:bg-white/5 rounded-lg transition-colors"
+                        >
+                          <Heart className="w-4 h-4" />
+                          <span>Favoris ({user?.favoriteComponents?.length || 0})</span>
+                        </Link>
+                        <Link
+                          to="/dashboard"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="w-full flex items-center gap-3 px-3 py-2 text-[#A1A1AA] hover:text-[#F5F5F7] hover:bg-white/5 rounded-lg transition-colors"
+                        >
+                          <Save className="w-4 h-4" />
+                          <span>Configurations ({user?.savedConfigurations?.length || 0})</span>
+                        </Link>
+                        <Link
+                          to="/fidelite"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="w-full flex items-center gap-3 px-3 py-2 text-[#A1A1AA] hover:text-[#F5F5F7] hover:bg-white/5 rounded-lg transition-colors"
+                        >
+                          <Star className="w-4 h-4" />
+                          <span>Fidélité</span>
+                        </Link>
+                        <Link
+                          to="/profil"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="w-full flex items-center gap-3 px-3 py-2 text-[#A1A1AA] hover:text-[#F5F5F7] hover:bg-white/5 rounded-lg transition-colors"
+                        >
+                          <Settings className="w-4 h-4" />
+                          <span>Profil</span>
+                        </Link>
+                        <hr className="my-2 border-white/10" />
+                        <button
+                          onClick={() => {
+                            logout();
+                            setIsUserMenuOpen(false);
+                          }}
+                          className="w-full flex items-center gap-3 px-3 py-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"
+                        >
+                          <LogOut className="w-4 h-4" />
+                          <span>Déconnexion</span>
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             ) : (
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setIsLoggedIn(true)}
-                className="px-5 py-2.5 bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] text-white rounded-full text-sm font-semibold shadow-lg shadow-[#4F8BF7]/30 hover:shadow-[#4F8BF7]/50 transition-all duration-300"
+                onClick={() => setIsAuthModalOpen(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-[#4A90E2] to-[#5BA3F5] rounded-full text-white font-medium shadow-lg shadow-[#4A90E2]/30"
               >
-                Connexion
+                <User className="w-4 h-4" />
+                <span className="text-sm">Connexion</span>
               </motion.button>
             )}
           </div>
@@ -100,34 +183,38 @@ export const Layout = ({ children }: LayoutProps) => {
       </div>
 
       {/* Main Content */}
-      <main className="relative z-10">
+      <main className="relative z-10 pt-24">
         {children}
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 mt-24 border-t border-white/10 bg-[#0C0C0C]/80 backdrop-blur-xl">
-        <div className="container mx-auto px-8 py-12">
+      <footer className="relative z-10 bg-[#1a1a1a]/50 backdrop-blur-xl border-t border-white/10 mt-20">
+        <div className="max-w-6xl mx-auto px-6 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {/* Brand */}
-            <div>
+            <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-br from-[#4A90E2] to-[#5BA3F5] rounded-lg flex items-center justify-center">
                   <Cpu className="w-6 h-6 text-white" />
                 </div>
-                <span className="text-xl font-bold text-[#F5F5F7]">PC Builder</span>
+                <span className="text-2xl font-bold text-[#F5F5F7]">siITE</span>
               </div>
-              <p className="text-[#A1A1AA] text-sm">
-                Créez la configuration gaming parfaite avec nos outils intelligents.
+              <p className="text-[#A1A1AA] mb-6 max-w-md">
+                La plateforme ultime pour configurer, comparer et optimiser votre PC gaming.
+                Trouvez les meilleurs composants au meilleur prix.
               </p>
             </div>
 
-            {/* Links */}
+            {/* Navigation */}
             <div>
               <h4 className="text-[#F5F5F7] font-semibold mb-4">Navigation</h4>
               <ul className="space-y-2">
                 {navigationItems.map(item => (
                   <li key={item.name}>
-                    <Link to={item.path} className="text-[#A1A1AA] hover:text-[#4F8BF7] text-sm transition-colors">
+                    <Link
+                      to={item.path}
+                      className="text-[#A1A1AA] hover:text-[#4A90E2] transition-colors"
+                    >
                       {item.name}
                     </Link>
                   </li>
@@ -135,31 +222,52 @@ export const Layout = ({ children }: LayoutProps) => {
               </ul>
             </div>
 
-            {/* Legal */}
+            {/* Support */}
             <div>
-              <h4 className="text-[#F5F5F7] font-semibold mb-4">Légal</h4>
+              <h4 className="text-[#F5F5F7] font-semibold mb-4">Support</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-[#A1A1AA] hover:text-[#4F8BF7] text-sm transition-colors">Mentions légales</a></li>
-                <li><a href="#" className="text-[#A1A1AA] hover:text-[#4F8BF7] text-sm transition-colors">CGU</a></li>
-                <li><a href="#" className="text-[#A1A1AA] hover:text-[#4F8BF7] text-sm transition-colors">Confidentialité</a></li>
-              </ul>
-            </div>
-
-            {/* Contact */}
-            <div>
-              <h4 className="text-[#F5F5F7] font-semibold mb-4">Contact</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-[#A1A1AA] hover:text-[#4F8BF7] text-sm transition-colors">Support</a></li>
-                <li><a href="#" className="text-[#A1A1AA] hover:text-[#4F8BF7] text-sm transition-colors">À propos</a></li>
+                <li>
+                  <a href="#" className="text-[#A1A1AA] hover:text-[#4A90E2] transition-colors">
+                    Centre d'aide
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-[#A1A1AA] hover:text-[#4A90E2] transition-colors">
+                    Contact
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-[#A1A1AA] hover:text-[#4A90E2] transition-colors">
+                    FAQ
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-white/5 text-center text-[#A1A1AA] text-sm">
-            © 2024 PC Builder. Tous droits réservés.
+          <hr className="border-white/10 my-8" />
+
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-[#A1A1AA] text-sm">
+              © 2024 siITE. Tous droits réservés.
+            </p>
+            <div className="flex items-center gap-6 text-sm">
+              <a href="#" className="text-[#A1A1AA] hover:text-[#4A90E2] transition-colors">
+                Politique de confidentialité
+              </a>
+              <a href="#" className="text-[#A1A1AA] hover:text-[#4A90E2] transition-colors">
+                Conditions d'utilisation
+              </a>
+            </div>
           </div>
         </div>
       </footer>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
     </div>
   );
 };

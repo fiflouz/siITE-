@@ -91,7 +91,7 @@ export const Guides: React.FC = () => {
               key={category}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-2.5 bg-[#1a1a1a] border border-white/10 rounded-lg font-semibold text-sm text-[#A1A1AA] hover:text-[#F5F5F7] hover:border-[#4F8BF7]/50 transition-all"
+              className="px-6 py-2.5 bg-[#1a1a1a] border border-white/10 rounded-lg font-semibold text-sm text-[#A1A1AA] hover:text-[#F5F5F7] hover:border-[#4A90E2]/50 transition-all"
             >
               {category}
             </motion.button>
@@ -104,11 +104,11 @@ export const Guides: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12"
         >
-          <div className="relative bg-gradient-to-r from-[#4F8BF7]/20 to-[#6B9CFF]/20 rounded-2xl p-8 border border-[#4F8BF7]/30 overflow-hidden">
-            <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(79,139,247,0.05)_25%,rgba(79,139,247,0.05)_50%,transparent_50%,transparent_75%,rgba(79,139,247,0.05)_75%)] bg-[length:20px_20px]" />
+          <div className="relative bg-gradient-to-r from-[#4A90E2]/20 to-[#5BA3F5]/20 rounded-2xl p-8 border border-[#4A90E2]/30 overflow-hidden">
+            <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(100,150,200,0.035)_25%,rgba(100,150,200,0.035)_50%,transparent_50%,transparent_75%,rgba(100,150,200,0.035)_75%)] bg-[length:20px_20px]" />
             
             <div className="relative z-10 max-w-3xl">
-              <span className="inline-block px-3 py-1 bg-[#4F8BF7]/20 border border-[#4F8BF7]/30 rounded-full text-[#6B9CFF] text-xs font-semibold mb-4">
+              <span className="inline-block px-3 py-1 bg-[#4A90E2]/20 border border-[#4A90E2]/30 rounded-full text-[#5BA3F5] text-xs font-semibold mb-4">
                 ⭐ Guide vedette
               </span>
               

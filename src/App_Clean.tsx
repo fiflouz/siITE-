@@ -1,10 +1,10 @@
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { Dashboard } from "./screens/Dashboard";
 import { Favorites } from "./screens/Favorites";
 import { Profile } from "./screens/Profile";
 import Components from "./screens/Components/Components";
-import "./tailwind.css";
 
 // Page d'accueil simplifiée
 const HomePage = () => (
@@ -96,7 +96,7 @@ const PlaceholderPage = ({ title }: { title: string }) => (
   </div>
 );
 
-export const App = () => {
+export const App: React.FC = () => {
   return (
     <AuthProvider>
       <Router>
@@ -105,7 +105,7 @@ export const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/favoris" element={<Favorites />} />
           <Route path="/profil" element={<Profile />} />
-          <Route path="/composants" element={<Components category="cpu" />} />
+          <Route path="/composants" element={<Components />} />
           <Route path="/configurateur" element={<PlaceholderPage title="Configurateur" />} />
           <Route path="/comparateur" element={<PlaceholderPage title="Comparateur" />} />
           <Route path="/guides" element={<PlaceholderPage title="Guides" />} />
