@@ -3,7 +3,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { Dashboard } from "./screens/Dashboard";
 import { Favorites } from "./screens/Favorites";
 import { Profile } from "./screens/Profile";
-import Components from "./screens/Components/Components";
+import { ComponentsPage } from "./screens/Components";
 import "./tailwind.css";
 
 // Page d'accueil simplifiée
@@ -105,7 +105,7 @@ export const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/favoris" element={<Favorites />} />
           <Route path="/profil" element={<Profile />} />
-          <Route path="/composants" element={<Components category="cpu" />} />
+          <Route path="/composants" element={<ComponentsPage />} />
           <Route path="/configurateur" element={<PlaceholderPage title="Configurateur" />} />
           <Route path="/comparateur" element={<PlaceholderPage title="Comparateur" />} />
           <Route path="/guides" element={<PlaceholderPage title="Guides" />} />
