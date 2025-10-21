@@ -1,0 +1,14 @@
+{
+  "nvidia-rtx-4070": {
+    "ean": "471XXXXXXX",
+    "mpn": "RTX4070-XYZ",
+    "query": "GeForce RTX 4070 12GB"
+  },
+  "amd-ryzen-7-7800x3d": {
+    "mpn": "100-100000910WOF",
+    "query": "Ryzen 7 7800X3D"
+  },
+  "samsung-990-pro-1tb": {
+    "query": "Samsung 990 Pro 1TB"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "version": "5.0.0",
+  "generated_at": "2025-10-21T12:48:32.966160",
+  "license": "Data schema CC-BY-4.0; brand/model names are trademarks of their owners.",
+  "currency": "EUR",
+  "price_disclaimer": "current_price_eur values are updated via free scrapers and eBay API (optional).",
+  "categories": {
+    "cpus": [
+      {
+        "id": "amd-ryzen-7-7800x3d",
+        "brand": "AMD",
+        "model": "Ryzen 7 7800X3D",
+        "release": "2023-04",
+        "year": 2023
+      }
+    ],
+    "gpus": [
+      {
+        "id": "nvidia-rtx-4070",
+        "brand": "Nvidia",
+        "model": "GeForce RTX 4070",
+        "release": "2023-04-12",
+        "year": 2023
+      }
+    ],
+    "ssds": [
+      {
+        "id": "samsung-990-pro-1tb",
+        "brand": "Samsung",
+        "model": "990 Pro 1TB",
+        "release": "2022-10",
+        "year": 2022
+      }
+    ],
+    "memory_kits": [],
+    "chipsets": []
+  },
+  "meta": {
+    "pricing_policy": {
+      "condition": "new",
+      "region": "FR",
+      "currency": "EUR"
+    }
+  }
+}
