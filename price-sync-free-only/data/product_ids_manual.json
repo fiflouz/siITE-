@@ -1,0 +1,89 @@
+{
+  "_comment": "EAN et MPN connus pour certains produits populaires",
+  "_note": "Plus il y a d'informations précises (EAN/MPN), meilleur sera le scraping",
+  
+  "intel-i9-13900k": {
+    "mpn": "BX8071513900K",
+    "query": "Intel Core i9-13900K",
+    "category": "cpu"
+  },
+  "amd-ryzen-9-7950x": {
+    "mpn": "100-100000514WOF",
+    "query": "AMD Ryzen 9 7950X",
+    "category": "cpu"
+  },
+  "amd-ryzen-7-7800x3d": {
+    "mpn": "100-100000910WOF",
+    "query": "AMD Ryzen 7 7800X3D",
+    "category": "cpu"
+  },
+  "intel-i5-13600k": {
+    "mpn": "BX8071513600K",
+    "query": "Intel Core i5-13600K",
+    "category": "cpu"
+  },
+  
+  "nvidia-rtx-4090": {
+    "query": "GeForce RTX 4090 24GB",
+    "category": "gpu",
+    "note": "Chercher version Founders Edition ou custom AIB"
+  },
+  "nvidia-rtx-4080": {
+    "query": "GeForce RTX 4080 16GB",
+    "category": "gpu"
+  },
+  "nvidia-rtx-4070": {
+    "query": "GeForce RTX 4070 12GB",
+    "category": "gpu"
+  },
+  "amd-rx-7900xtx": {
+    "query": "Radeon RX 7900 XTX 24GB",
+    "category": "gpu"
+  },
+  "nvidia-rtx-3060": {
+    "query": "GeForce RTX 3060 12GB",
+    "category": "gpu"
+  },
+  
+  "samsung-990-pro-1tb": {
+    "ean": "8806094638707",
+    "mpn": "MZ-V9P1T0BW",
+    "query": "Samsung 990 Pro 1TB",
+    "category": "ssd"
+  },
+  "samsung-980-pro": {
+    "query": "Samsung 980 Pro 1TB NVMe",
+    "category": "ssd"
+  },
+  "wd-sn850x-1tb": {
+    "mpn": "WDS100T2X0E",
+    "query": "WD Black SN850X 1TB",
+    "category": "ssd"
+  },
+  "crucial-p5-plus-1tb": {
+    "mpn": "CT1000P5PSSD8",
+    "query": "Crucial P5 Plus 1TB",
+    "category": "ssd"
+  },
+  
+  "corsair-vengeance-32gb-6000": {
+    "mpn": "CMK32GX5M2B6000C36",
+    "query": "Corsair Vengeance DDR5 32GB 6000MHz",
+    "category": "ram"
+  },
+  "gskill-tridentz5-32g-6000": {
+    "mpn": "F5-6000J3636F16GX2",
+    "query": "G.Skill Trident Z5 32GB DDR5 6000MHz",
+    "category": "ram"
+  },
+  "kingston-fury-32g-5200": {
+    "mpn": "KF552C40BBK2-32",
+    "query": "Kingston Fury Beast DDR5 32GB 5200MHz",
+    "category": "ram"
+  },
+  "corsair-vengeance-16g-3200": {
+    "mpn": "CMK16GX4M2B3200C16",
+    "query": "Corsair Vengeance LPX DDR4 16GB 3200MHz",
+    "category": "ram"
+  }
+}
