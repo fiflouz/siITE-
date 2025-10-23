@@ -5,206 +5,140 @@ export interface User {
   id: string;
   username: string;
   email: string;
-  avatar?: string;
-  joinDate: string;
-  lastLogin: string;
-  preferences: {
-    theme: 'light' | 'dark';
-    notifications: boolean;
-    newsletter: boolean;
-  };
-  favoriteComponents: string[];
-  savedConfigurations: SavedConfiguration[];
-  activityHistory: ActivityItem[];
+  createdAt: Date;
+  savedConfigurations: Configuration[];
+  favorites: string[];
+  preferences: UserPreferences;
 }
 
-export interface SavedConfiguration {
+export interface Configuration {
   id: string;
   name: string;
-  description?: string;
-  components: {
-    cpu?: any;
-    gpu?: any;
-    motherboard?: any;
-    ram?: any;
-    storage?: any;
-    psu?: any;
-    case?: any;
-    cooling?: any;
-  };
+  config: any;
   totalPrice: number;
-  createdAt: string;
-  lastModified: string;
-  tags?: string[];
-  isPublic: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export interface ActivityItem {
-  id: string;
-  type: 'config_saved' | 'config_loaded' | 'favorite_added' | 'favorite_removed' | 'profile_updated';
-  description: string;
-  timestamp: string;
-  metadata?: any;
+export interface UserPreferences {
+  theme: 'light' | 'dark';
+  currency: 'EUR' | 'USD';
+  notifications: boolean;
+  newsletter: boolean;
 }
 
-interface AuthContextType {
+export interface AuthContextType {
   user: User | null;
   isLoggedIn: boolean;
   isLoading: boolean;
-  
-  // Auth actions
   login: (email: string, password: string) => Promise<boolean>;
   register: (username: string, email: string, password: string) => Promise<boolean>;
   logout: () => void;
-  
-  // Configuration management
-  saveConfiguration: (config: any, name: string, description?: string) => Promise<string>;
-  loadConfiguration: (configId: string) => SavedConfiguration | null;
+  saveConfiguration: (name: string, config: any, totalPrice: number) => Promise<boolean>;
+  loadConfiguration: (configId: string) => Configuration | null;
   deleteConfiguration: (configId: string) => boolean;
-  duplicateConfiguration: (configId: string, newName: string) => Promise<string>;
-  updateConfiguration: (configId: string, updates: Partial<SavedConfiguration>) => boolean;
-  
-  // Favorites management
-  addToFavorites: (componentId: string) => boolean;
-  removeFromFavorites: (componentId: string) => boolean;
-  isFavorite: (componentId: string) => boolean;
-  
-  // Profile management
-  updateProfile: (updates: Partial<User>) => boolean;
-  updatePreferences: (preferences: Partial<User['preferences']>) => boolean;
-  
-  // Stats & utilities
+  updateProfile: (updates: Partial<User>) => Promise<boolean>;
+  updatePreferences: (preferences: Partial<UserPreferences>) => Promise<boolean>;
+  addToFavorites: (itemId: string) => void;
+  removeFromFavorites: (itemId: string) => void;
+  isFavorite: (itemId: string) => boolean;
   getStats: () => {
     totalConfigs: number;
     totalFavorites: number;
-    avgConfigPrice: number;
-    mostUsedComponents: string[];
+    totalSpent: number;
   };
 }
 
+// Create context
+const STORAGE_KEY = 'siite_user';
+
+const deserializeConfiguration = (raw: any): Configuration => ({
+  ...raw,
+  createdAt: raw?.createdAt ? new Date(raw.createdAt) : new Date(),
+  updatedAt: raw?.updatedAt ? new Date(raw.updatedAt) : new Date()
+});
+
+const deserializeUser = (raw: any): User => {
+  if (!raw) {
+    throw new Error('Invalid user payload');
+  }
+
+  return {
+    ...raw,
+    createdAt: raw.createdAt ? new Date(raw.createdAt) : new Date(),
+    savedConfigurations: Array.isArray(raw.savedConfigurations)
+      ? raw.savedConfigurations.map(deserializeConfiguration)
+      : [],
+    favorites: Array.isArray(raw.favorites) ? [...raw.favorites] : [],
+    preferences: {
+      theme: raw.preferences?.theme ?? 'dark',
+      currency: raw.preferences?.currency ?? 'EUR',
+      notifications: raw.preferences?.notifications ?? true,
+      newsletter: raw.preferences?.newsletter ?? false
+    }
+  };
+};
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Custom hook to use auth context
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
-
-// Storage keys
-const STORAGE_KEYS = {
-  USERS: 'siite_users',
-  CURRENT_USER: 'siite_current_user',
-  SESSION: 'siite_session'
-};
-
-// Utility functions
-const generateId = () => Date.now().toString(36) + Math.random().toString(36).substr(2);
-
-const getStoredUsers = (): Record<string, User> => {
-  try {
-    const users = localStorage.getItem(STORAGE_KEYS.USERS);
-    return users ? JSON.parse(users) : {};
-  } catch {
-    return {};
-  }
-};
-
-const saveUsers = (users: Record<string, User>) => {
-  localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
-};
-
-const createDefaultUser = (username: string, email: string): User => ({
-  id: generateId(),
-  username,
-  email,
-  joinDate: new Date().toISOString(),
-  lastLogin: new Date().toISOString(),
-  preferences: {
-    theme: 'dark',
-    notifications: true,
-    newsletter: false
-  },
-  favoriteComponents: [],
-  savedConfigurations: [],
-  activityHistory: [{
-    id: generateId(),
-    type: 'profile_updated',
-    description: 'Compte créé avec succès',
-    timestamp: new Date().toISOString()
-  }]
-});
-
-const addActivity = (user: User, activity: Omit<ActivityItem, 'id' | 'timestamp'>): User => ({
-  ...user,
-  activityHistory: [
-    {
-      ...activity,
-      id: generateId(),
-      timestamp: new Date().toISOString()
-    },
-    ...user.activityHistory.slice(0, 49) // Keep last 50 activities
-  ]
-});
-
+// Provider component
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize auth state
+  // Load user from localStorage on mount
   useEffect(() => {
-    try {
-      const currentUserId = localStorage.getItem(STORAGE_KEYS.CURRENT_USER);
-      if (currentUserId) {
-        const users = getStoredUsers();
-        const userData = users[currentUserId];
-        if (userData) {
-          setUser(userData);
-        } else {
-          localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
+    const loadUser = () => {
+      try {
+        const storedUser = localStorage.getItem(STORAGE_KEY);
+        if (storedUser) {
+          const parsedUser = deserializeUser(JSON.parse(storedUser));
+          setUser(parsedUser);
         }
+      } catch (error) {
+        console.error('Error loading user data:', error);
+        localStorage.removeItem(STORAGE_KEY);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error('Error loading user data:', error);
-    } finally {
-      setIsLoading(false);
-    }
+    };
+
+    loadUser();
   }, []);
 
-  // Save user data when user changes
+  // Save user to localStorage whenever it changes
   useEffect(() => {
     if (user) {
-      const users = getStoredUsers();
-      users[user.id] = user;
-      saveUsers(users);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+    } else {
+      localStorage.removeItem(STORAGE_KEY);
     }
   }, [user]);
 
   const login = async (email: string, password: string): Promise<boolean> => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      
-      // Simulate API delay
+      const normalizedEmail = email.trim().toLowerCase();
       await new Promise(resolve => setTimeout(resolve, 800));
       
-      const users = getStoredUsers();
-      const userData = Object.values(users).find(u => u.email === email);
+      const existingUser = localStorage.getItem(`siite_user_${normalizedEmail}`);
       
-      if (userData) {
-        // Update last login
-        const updatedUser = {
-          ...userData,
-          lastLogin: new Date().toISOString()
-        };
-        
-        setUser(updatedUser);
-        localStorage.setItem(STORAGE_KEYS.CURRENT_USER, userData.id);
-        return true;
+      if (existingUser) {
+        const userData = JSON.parse(existingUser);
+        if (userData.password === password) {
+          const hydratedUser = deserializeUser(userData.user);
+          setUser(hydratedUser);
+          return true;
+        }
       }
       
       return false;
@@ -217,27 +151,37 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const register = async (username: string, email: string, password: string): Promise<boolean> => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      
-      // Simulate API delay
+      const normalizedEmail = email.trim().toLowerCase();
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      const users = getStoredUsers();
-      
-      // Check if email already exists
-      if (Object.values(users).some(u => u.email === email)) {
+      const existingUser = localStorage.getItem(`siite_user_${normalizedEmail}`);
+      if (existingUser) {
         return false;
       }
       
-      const newUser = createDefaultUser(username, email);
+      const newUser: User = {
+        id: `user_${Date.now()}`,
+        username,
+        email: normalizedEmail,
+        createdAt: new Date(),
+        savedConfigurations: [],
+        favorites: [],
+        preferences: {
+          theme: 'dark',
+          currency: 'EUR',
+          notifications: true,
+          newsletter: false
+        }
+      };
       
-      users[newUser.id] = newUser;
-      saveUsers(users);
+      localStorage.setItem(`siite_user_${normalizedEmail}`, JSON.stringify({
+        user: newUser,
+        password
+      }));
       
-      setUser(newUser);
-      localStorage.setItem(STORAGE_KEYS.CURRENT_USER, newUser.id);
-      
+      setUser(deserializeUser(newUser));
       return true;
     } catch (error) {
       console.error('Registration error:', error);
@@ -249,45 +193,36 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
-    localStorage.removeItem(STORAGE_KEYS.SESSION);
+    localStorage.removeItem(STORAGE_KEY);
   };
 
-  const saveConfiguration = async (config: any, name: string, description?: string): Promise<string> => {
-    if (!user) throw new Error('User not authenticated');
+  const saveConfiguration = async (name: string, config: any, totalPrice: number): Promise<boolean> => {
+    if (!user) return false;
     
-    const configId = generateId();
-    const totalPrice = Object.values(config).reduce((sum: number, component: any) => {
-      return sum + (component?.price || 0);
-    }, 0);
-    
-    const newConfig: SavedConfiguration = {
-      id: configId,
-      name,
-      description,
-      components: config,
-      totalPrice,
-      createdAt: new Date().toISOString(),
-      lastModified: new Date().toISOString(),
-      isPublic: false
-    };
-    
-    const updatedUser = {
-      ...user,
-      savedConfigurations: [newConfig, ...user.savedConfigurations]
-    };
-    
-    const userWithActivity = addActivity(updatedUser, {
-      type: 'config_saved',
-      description: `Configuration "${name}" sauvegardée`,
-      metadata: { configId, totalPrice }
-    });
-    
-    setUser(userWithActivity);
-    return configId;
+    try {
+      const newConfig: Configuration = {
+        id: `config_${Date.now()}`,
+        name,
+        config,
+        totalPrice,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      
+      const updatedUser = {
+        ...user,
+        savedConfigurations: [...user.savedConfigurations, newConfig]
+      };
+      
+      setUser(updatedUser);
+      return true;
+    } catch (error) {
+      console.error('Save configuration error:', error);
+      return false;
+    }
   };
 
-  const loadConfiguration = (configId: string): SavedConfiguration | null => {
+  const loadConfiguration = (configId: string): Configuration | null => {
     if (!user) return null;
     return user.savedConfigurations.find(config => config.id === configId) || null;
   };
@@ -295,114 +230,73 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const deleteConfiguration = (configId: string): boolean => {
     if (!user) return false;
     
-    const configToDelete = user.savedConfigurations.find(c => c.id === configId);
-    if (!configToDelete) return false;
-    
-    const updatedUser = {
-      ...user,
-      savedConfigurations: user.savedConfigurations.filter(config => config.id !== configId)
-    };
-    
-    const userWithActivity = addActivity(updatedUser, {
-      type: 'config_saved',
-      description: `Configuration "${configToDelete.name}" supprimée`
-    });
-    
-    setUser(userWithActivity);
-    return true;
+    try {
+      const updatedUser = {
+        ...user,
+        savedConfigurations: user.savedConfigurations.filter(config => config.id !== configId)
+      };
+      setUser(updatedUser);
+      return true;
+    } catch (error) {
+      console.error('Delete configuration error:', error);
+      return false;
+    }
   };
 
-  const duplicateConfiguration = async (configId: string, newName: string): Promise<string> => {
-    const originalConfig = loadConfiguration(configId);
-    if (!originalConfig) throw new Error('Configuration not found');
-    
-    return saveConfiguration(originalConfig.components, newName, originalConfig.description);
-  };
-
-  const updateConfiguration = (configId: string, updates: Partial<SavedConfiguration>): boolean => {
+  const updateProfile = async (updates: Partial<User>): Promise<boolean> => {
     if (!user) return false;
     
-    const configIndex = user.savedConfigurations.findIndex(c => c.id === configId);
-    if (configIndex === -1) return false;
-    
-    const updatedConfigs = [...user.savedConfigurations];
-    updatedConfigs[configIndex] = {
-      ...updatedConfigs[configIndex],
-      ...updates,
-      lastModified: new Date().toISOString()
-    };
-    
-    setUser({
-      ...user,
-      savedConfigurations: updatedConfigs
-    });
-    
-    return true;
+    try {
+      const updatedUser = { ...user, ...updates };
+      setUser(updatedUser);
+      return true;
+    } catch (error) {
+      console.error('Update profile error:', error);
+      return false;
+    }
   };
 
-  const addToFavorites = (componentId: string): boolean => {
-    if (!user || user.favoriteComponents.includes(componentId)) return false;
-    
-    const updatedUser = {
-      ...user,
-      favoriteComponents: [componentId, ...user.favoriteComponents]
-    };
-    
-    const userWithActivity = addActivity(updatedUser, {
-      type: 'favorite_added',
-      description: `Composant ajouté aux favoris`,
-      metadata: { componentId }
-    });
-    
-    setUser(userWithActivity);
-    return true;
-  };
-
-  const removeFromFavorites = (componentId: string): boolean => {
-    if (!user || !user.favoriteComponents.includes(componentId)) return false;
-    
-    const updatedUser = {
-      ...user,
-      favoriteComponents: user.favoriteComponents.filter(id => id !== componentId)
-    };
-    
-    const userWithActivity = addActivity(updatedUser, {
-      type: 'favorite_removed',
-      description: `Composant retiré des favoris`,
-      metadata: { componentId }
-    });
-    
-    setUser(userWithActivity);
-    return true;
-  };
-
-  const isFavorite = (componentId: string): boolean => {
-    return user?.favoriteComponents.includes(componentId) || false;
-  };
-
-  const updateProfile = (updates: Partial<User>): boolean => {
+  const updatePreferences = async (preferences: Partial<UserPreferences>): Promise<boolean> => {
     if (!user) return false;
     
-    const updatedUser = { ...user, ...updates };
-    const userWithActivity = addActivity(updatedUser, {
-      type: 'profile_updated',
-      description: 'Profil mis à jour'
-    });
-    
-    setUser(userWithActivity);
-    return true;
+    try {
+      const updatedUser = {
+        ...user,
+        preferences: { ...user.preferences, ...preferences }
+      };
+      setUser(updatedUser);
+      return true;
+    } catch (error) {
+      console.error('Update preferences error:', error);
+      return false;
+    }
   };
 
-  const updatePreferences = (preferences: Partial<User['preferences']>): boolean => {
-    if (!user) return false;
+  const addToFavorites = (itemId: string) => {
+    if (!user) return;
+    
+    if (!user.favorites.includes(itemId)) {
+      const updatedUser = {
+        ...user,
+        favorites: [...user.favorites, itemId]
+      };
+      setUser(updatedUser);
+    }
+  };
+
+  const removeFromFavorites = (itemId: string) => {
+    if (!user) return;
     
     const updatedUser = {
       ...user,
-      preferences: { ...user.preferences, ...preferences }
+      favorites: user.favorites.filter(id => id !== itemId)
     };
-    
     setUser(updatedUser);
-    return true;
+  };
+
+  const isFavorite = (itemId: string): boolean => {
+    if (!user) return false;
+    return user.favorites.includes(itemId);
   };
 
   const getStats = () => {
@@ -410,37 +304,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return {
         totalConfigs: 0,
         totalFavorites: 0,
-        avgConfigPrice: 0,
-        mostUsedComponents: []
+        totalSpent: 0
       };
     }
     
-    const totalConfigs = user.savedConfigurations.length;
-    const totalFavorites = user.favoriteComponents.length;
-    const avgConfigPrice = totalConfigs > 0 
-      ? user.savedConfigurations.reduce((sum, config) => sum + config.totalPrice, 0) / totalConfigs
-      : 0;
-    
-    // Count component usage
-    const componentCount: Record<string, number> = {};
-    user.savedConfigurations.forEach(config => {
-      Object.keys(config.components).forEach(type => {
-        if (config.components[type]) {
-          componentCount[type] = (componentCount[type] || 0) + 1;
-        }
-      });
-    });
-    
-    const mostUsedComponents = Object.entries(componentCount)
-      .sort(([,a], [,b]) => b - a)
-      .slice(0, 5)
-      .map(([component]) => component);
-    
     return {
-      totalConfigs,
-      totalFavorites,
-      avgConfigPrice,
-      mostUsedComponents
+      totalConfigs: user.savedConfigurations.length,
+      totalFavorites: user.favorites.length,
+      totalSpent: user.savedConfigurations.reduce((sum, config) => sum + config.totalPrice, 0)
     };
   };
 
@@ -448,29 +319,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     user,
     isLoggedIn: !!user,
     isLoading,
-    
-    // Auth actions
     login,
     register,
     logout,
-    
-    // Configuration management
     saveConfiguration,
     loadConfiguration,
     deleteConfiguration,
-    duplicateConfiguration,
-    updateConfiguration,
-    
-    // Favorites management
+    updateProfile,
+    updatePreferences,
     addToFavorites,
     removeFromFavorites,
     isFavorite,
-    
-    // Profile management
-    updateProfile,
-    updatePreferences,
-    
-    // Stats & utilities
     getStats
   };
 

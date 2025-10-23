@@ -1,9 +1,19 @@
-import { useState, type ReactNode } from "react";
+<<<<<<< HEAD
+import { useEffect, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Cpu, User, LogOut, Settings, Heart, Save, ChevronDown, Star } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { AuthModal } from "./AuthModal";
 import { useAuth } from "../contexts/AuthContext";
+=======
+import { useEffect, useState, type ReactNode } from "react";
+import { motion } from "framer-motion";
+import { Cpu, Loader2, LogOut, User } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
+import { AuthModal } from "./AuthModal";
+import { useAuth } from "../contexts/AuthContext";
+import { useComparatorSelection } from "../contexts/ComparatorContext";
+>>>>>>> 81e9197 (feat: revamp comparator experience)
 import { Link, useLocation } from "react-router-dom";
 
 interface LayoutProps {
@@ -14,8 +24,27 @@ export const Layout = ({ children }: LayoutProps) => {
   const [isHeaderHovered, setIsHeaderHovered] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+<<<<<<< HEAD
   const { user, isLoggedIn, logout } = useAuth();
+=======
+  const { isLoggedIn, user, logout, isLoading } = useAuth();
+  const { count: comparatorCount } = useComparatorSelection();
+>>>>>>> 81e9197 (feat: revamp comparator experience)
   const location = useLocation();
+
+  useEffect(() => {
+    setIsUserMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      setIsAuthModalOpen(false);
+    } else {
+      setIsUserMenuOpen(false);
+    }
+  }, [isLoggedIn]);
+
+  const userInitial = (user?.username || user?.email || 'U').charAt(0).toUpperCase();
 
   const navigationItems = [
     { name: 'Configurateur', path: '/configurateur' },
@@ -68,6 +97,7 @@ export const Layout = ({ children }: LayoutProps) => {
           </Link>
 
           {/* Navigation */}
+<<<<<<< HEAD
           <nav className="flex items-center gap-6">
             {navigationItems.map(item => (
               <Link
@@ -81,6 +111,38 @@ export const Layout = ({ children }: LayoutProps) => {
                 {item.name}
               </Link>
             ))}
+=======
+          <nav className="flex items-center gap-8">
+            {navigationItems.map((item) => {
+              const isComparator = item.path === "/comparateur";
+              const showBadge = isComparator && comparatorCount > 0;
+              return (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className="text-[#A1A1AA] hover:text-[#F5F5F7] transition-all duration-200 text-sm font-medium relative group"
+                >
+                  <span className="flex items-center gap-2">
+                    {item.name}
+                    {showBadge && (
+                      <span
+                        className="min-w-5 rounded-full bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] px-1.5 py-0.5 text-[10px] font-semibold text-white"
+                        aria-live="polite"
+                      >
+                        {comparatorCount}
+                      </span>
+                    )}
+                  </span>
+                  <motion.span
+                    className="absolute -bottom-1 left-0 h-px bg-[#4F8BF7]"
+                    initial={{ width: 0 }}
+                    animate={{ width: location.pathname === item.path ? "100%" : 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </Link>
+              );
+            })}
+>>>>>>> 81e9197 (feat: revamp comparator experience)
           </nav>
 
           {/* Right side actions */}
@@ -93,6 +155,7 @@ export const Layout = ({ children }: LayoutProps) => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+<<<<<<< HEAD
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   className="flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-[#4A90E2] to-[#5BA3F5] rounded-full text-white font-medium shadow-lg shadow-[#4A90E2]/30"
                 >
@@ -166,16 +229,60 @@ export const Layout = ({ children }: LayoutProps) => {
                     </motion.div>
                   )}
                 </AnimatePresence>
+=======
+                  onClick={() => setIsUserMenuOpen((prev) => !prev)}
+                  className="w-10 h-10 rounded-full bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] flex items-center justify-center focus:outline-none"
+                >
+                  <span className="text-sm font-semibold text-white">{userInitial}</span>
+                </motion.button>
+                {isUserMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2, ease: 'easeOut' }}
+                    className="absolute right-0 mt-3 w-56 rounded-xl border border-white/10 bg-[#111113] shadow-xl shadow-black/40 overflow-hidden"
+                  >
+                    <div className="px-4 py-3 border-b border-white/5">
+                      <p className="text-xs text-[#A1A1AA]">Connecté en tant que</p>
+                      <p className="text-sm font-semibold text-[#F5F5F7] truncate">{user?.username || user?.email}</p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsUserMenuOpen(false);
+                      }}
+                      className="flex w-full items-center gap-2 px-4 py-3 text-sm text-left text-[#F5F5F7] hover:bg-white/5 transition-colors"
+                    >
+                      <LogOut className="w-4 h-4 text-[#A1A1AA]" />
+                      Déconnexion
+                    </button>
+                  </motion.div>
+                )}
+>>>>>>> 81e9197 (feat: revamp comparator experience)
               </div>
             ) : (
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsAuthModalOpen(true)}
+<<<<<<< HEAD
                 className="flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-[#4A90E2] to-[#5BA3F5] rounded-full text-white font-medium shadow-lg shadow-[#4A90E2]/30"
               >
                 <User className="w-4 h-4" />
                 <span className="text-sm">Connexion</span>
+=======
+                className="px-5 py-2.5 bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] text-white rounded-full text-sm font-semibold shadow-lg shadow-[#4F8BF7]/30 hover:shadow-[#4F8BF7]/50 transition-all duration-300 disabled:opacity-60 disabled:pointer-events-none"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Chargement
+                  </span>
+                ) : (
+                  'Connexion'
+                )}
+>>>>>>> 81e9197 (feat: revamp comparator experience)
               </motion.button>
             )}
           </div>
@@ -262,12 +369,16 @@ export const Layout = ({ children }: LayoutProps) => {
           </div>
         </div>
       </footer>
+<<<<<<< HEAD
 
       {/* Auth Modal */}
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
       />
+=======
+      <AuthModal open={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+>>>>>>> 81e9197 (feat: revamp comparator experience)
     </div>
   );
 };

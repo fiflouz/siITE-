@@ -55,15 +55,15 @@
       }
     },
     {
-      "id": "src/components/Layout.tsx:44:10-to-src/screens/GamingFrame/GamingFrame.tsx",
+      "id": "src/components/Layout.tsx:64:10-to-src/screens/GamingFrame/GamingFrame.tsx",
       "source": "src/screens/GamingFrame/GamingFrame.tsx",
       "target": "src/screens/GamingFrame/GamingFrame.tsx",
       "data": {
         "viaRoute": "/",
         "trigger": {
           "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <motion.div \n              className=\"w-10 h-10 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-lg flex items-center justify-center\"\n              whileHover={{ rotate: 360 }}\n              transition={{ duration: 0.6 }}\n            >\n              <Cpu className=\"w-6 h-6 text-white\" />\n            </motion.div>\n            <span className=\"text-xl font-bold text-[#F5F5F7] tracking-tight\">\n              PC Builder\n            </span>\n          </Link>",
-          "line": 44,
-          "endLine": 55,
+          "line": 64,
+          "endLine": 75,
           "column": 10,
           "endColumn": 17,
           "sourceFile": "src/components/Layout.tsx"
@@ -71,15 +71,15 @@
       }
     },
     {
-      "id": "src/components/Layout.tsx:44:10-to-src/screens/GamingFrame/GamingFrame.tsx",
+      "id": "src/components/Layout.tsx:64:10-to-src/screens/GamingFrame/GamingFrame.tsx",
       "source": "src/screens/GamingFrame/GamingFrame.tsx",
       "target": "src/screens/GamingFrame/GamingFrame.tsx",
       "data": {
         "viaRoute": "/",
         "trigger": {
           "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <motion.div \n              className=\"w-10 h-10 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-lg flex items-center justify-center\"\n              whileHover={{ rotate: 360 }}\n              transition={{ duration: 0.6 }}\n            >\n              <Cpu className=\"w-6 h-6 text-white\" />\n            </motion.div>\n            <span className=\"text-xl font-bold text-[#F5F5F7] tracking-tight\">\n              PC Builder\n            </span>\n          </Link>",
-          "line": 44,
-          "endLine": 55,
+          "line": 64,
+          "endLine": 75,
           "column": 10,
           "endColumn": 17,
           "sourceFile": "src/components/Layout.tsx"
@@ -87,15 +87,15 @@
       }
     },
     {
-      "id": "src/components/Layout.tsx:44:10-to-src/screens/GamingFrame/GamingFrame.tsx",
+      "id": "src/components/Layout.tsx:64:10-to-src/screens/GamingFrame/GamingFrame.tsx",
       "source": "src/screens/GamingFrame/GamingFrame.tsx",
       "target": "src/screens/GamingFrame/GamingFrame.tsx",
       "data": {
         "viaRoute": "/",
         "trigger": {
           "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <motion.div \n              className=\"w-10 h-10 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-lg flex items-center justify-center\"\n              whileHover={{ rotate: 360 }}\n              transition={{ duration: 0.6 }}\n            >\n              <Cpu className=\"w-6 h-6 text-white\" />\n            </motion.div>\n            <span className=\"text-xl font-bold text-[#F5F5F7] tracking-tight\">\n              PC Builder\n            </span>\n          </Link>",
-          "line": 44,
-          "endLine": 55,
+          "line": 64,
+          "endLine": 75,
           "column": 10,
           "endColumn": 17,
           "sourceFile": "src/components/Layout.tsx"
@@ -103,15 +103,31 @@
       }
     },
     {
-      "id": "src/components/Layout.tsx:44:10-to-src/screens/GamingFrame/GamingFrame.tsx",
+      "id": "src/components/Layout.tsx:64:10-to-src/screens/GamingFrame/GamingFrame.tsx",
       "source": "src/screens/GamingFrame/GamingFrame.tsx",
       "target": "src/screens/GamingFrame/GamingFrame.tsx",
       "data": {
         "viaRoute": "/",
         "trigger": {
           "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <motion.div \n              className=\"w-10 h-10 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-lg flex items-center justify-center\"\n              whileHover={{ rotate: 360 }}\n              transition={{ duration: 0.6 }}\n            >\n              <Cpu className=\"w-6 h-6 text-white\" />\n            </motion.div>\n            <span className=\"text-xl font-bold text-[#F5F5F7] tracking-tight\">\n              PC Builder\n            </span>\n          </Link>",
-          "line": 44,
-          "endLine": 55,
+          "line": 64,
+          "endLine": 75,
+          "column": 10,
+          "endColumn": 17,
+          "sourceFile": "src/components/Layout.tsx"
+        }
+      }
+    },
+    {
+      "id": "src/components/Layout.tsx:64:10-to-src/screens/GamingFrame/GamingFrame.tsx",
+      "source": "src/screens/GamingFrame/GamingFrame.tsx",
+      "target": "src/screens/GamingFrame/GamingFrame.tsx",
+      "data": {
+        "viaRoute": "/",
+        "trigger": {
+          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <motion.div \n              className=\"w-10 h-10 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-lg flex items-center justify-center\"\n              whileHover={{ rotate: 360 }}\n              transition={{ duration: 0.6 }}\n            >\n              <Cpu className=\"w-6 h-6 text-white\" />\n            </motion.div>\n            <span className=\"text-xl font-bold text-[#F5F5F7] tracking-tight\">\n              PC Builder\n            </span>\n          </Link>",
+          "line": 64,
+          "endLine": 75,
           "column": 10,
           "endColumn": 17,
           "sourceFile": "src/components/Layout.tsx"
