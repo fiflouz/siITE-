@@ -14,13 +14,14 @@
     "lint:next": "cd next-app && npm run lint"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.5.0",
     "clsx": "2.1.1",
     "framer-motion": "^11.0.0",
     "lucide-react": "^0.344.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.1",
     "react-intersection-observer": "^9.8.0",
+    "react-router-dom": "^6.8.1",
     "tailwind-merge": "2.5.4",
     "tailwindcss-animate": "1.0.7"
   },
