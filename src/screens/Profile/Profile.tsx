@@ -24,7 +24,7 @@ import {
   Globe,
   Palette
 } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 export const Profile: React.FC = () => {
   const { user, isLoggedIn, updateProfile, updatePreferences, logout } = useAuth();
@@ -134,7 +134,7 @@ export const Profile: React.FC = () => {
         preferences: user.preferences
       },
       configurations: user.savedConfigurations,
-      favorites: user.favoriteComponents,
+      favorites: user.favorites,
       activity: user.activityHistory
     };
 

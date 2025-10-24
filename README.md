@@ -29,3 +29,27 @@ If you are satisfied with the result, you can finally build the project for rele
 ```
 npm run build
 ```
+
+## Next.js migration preview
+
+This repository now also contains a Next.js 14 (App Router) skeleton inside the `next-app/` directory. It is
+shipped with Tailwind CSS, TypeScript and the first pages required for the upcoming experience.
+
+Install the dependencies for this sub-project with:
+
+```
+cd next-app
+npm install
+```
+
+Useful scripts are exposed from the root `package.json` for convenience:
+
+```
+npm run dev:next     # Start Next.js dev server (port 3000 by default)
+npm run build:next   # Build the Next.js app
+npm run start:next   # Run the production server
+npm run lint:next    # Lint the Next.js app
+```
+
+When deploying on Vercel (or any CI), set the root directory to `next-app` to target the new application.
+

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { AnimatedCounter } from "../../components/AnimatedCounter";
 import { ScrollReveal } from "../../components/ScrollReveal";
 import { Layout } from "../../components/Layout";
+import { BudgetRecommender } from "../../components/home/BudgetRecommender";
 
 export const GamingFrame = (): JSX.Element => {
   const [favorites, setFavorites] = useState<number[]>([]);
@@ -15,12 +16,7 @@ export const GamingFrame = (): JSX.Element => {
     { value: 15000, label: 'Utilisateurs', suffix: '+' }
   ];
 
-  const featuredSpecs = [
-    { component: 'CPU', name: 'AMD Ryzen 7 7800X3D' },
-    { component: 'GPU', name: 'RTX 4070 Ti Super' },
-    { component: 'RAM', name: '32GB DDR5 6000MHz' },
-    { component: 'SSD', name: '1TB NVMe Gen4' }
-  ];
+
 
   const configurations = [
     {
@@ -105,9 +101,9 @@ export const GamingFrame = (): JSX.Element => {
             
             {/* Title */}
             <h1 className="text-6xl font-bold text-[#F5F5F7] leading-tight tracking-tight">
-              Construis ton
+              Configs 100% compatibles
               <span className="block bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] bg-clip-text text-transparent">
-                PC Gaming Parfait
+                Prix NEUF mis à jour
               </span>
             </h1>
 
@@ -158,67 +154,14 @@ export const GamingFrame = (): JSX.Element => {
             </div>
           </motion.div>
 
-          {/* Right Content - Featured Config Card */}
+          {/* Right Content - Budget Recommender */}
           <motion.div 
             className="relative"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#4F8BF7]/20 to-[#6B9CFF]/20 rounded-2xl blur-3xl" />
-            <div className="relative bg-[#1a1a1a]/80 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
-              {/* Config Preview */}
-              <div className="w-full h-64 bg-[#0E0E10] rounded-xl mb-6 flex items-center justify-center border border-white/10 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(79,139,247,0.03)_25%,rgba(79,139,247,0.03)_50%,transparent_50%,transparent_75%,rgba(79,139,247,0.03)_75%)] bg-[length:20px_20px]" />
-                <motion.div
-                  animate={{ 
-                    rotateY: [0, 360],
-                  }}
-                  transition={{ 
-                    duration: 20,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                >
-                  <Cpu className="w-24 h-24 text-[#4F8BF7]/30 relative z-10" />
-                </motion.div>
-              </div>
-
-              <div className="space-y-4">
-                {/* Header */}
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-bold text-[#F5F5F7]">Config Recommandée</h3>
-                  <div className="flex items-center gap-1 px-3 py-1 bg-[#4F8BF7]/10 rounded-full">
-                    <span className="text-[#F5F5F7] text-sm font-semibold">2499€</span>
-                  </div>
-                </div>
-
-                {/* Specs List */}
-                <div className="space-y-2.5">
-                  {featuredSpecs.map((item, index) => (
-                    <motion.div 
-                      key={item.component}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.6 + index * 0.1 }}
-                      className="flex items-center justify-between py-2 border-b border-white/10"
-                    >
-                      <span className="text-[#A1A1AA] text-sm font-medium">{item.component}</span>
-                      <span className="text-[#F5F5F7] text-sm">{item.name}</span>
-                    </motion.div>
-                  ))}
-                </div>
-
-                {/* CTA Button */}
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full py-3 bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] text-white rounded-lg font-semibold shadow-lg shadow-[#4F8BF7]/30 hover:shadow-[#4F8BF7]/50 transition-all duration-300 mt-4"
-                >
-                  Voir la configuration
-                </motion.button>
-              </div>
-            </div>
+            <BudgetRecommender />
           </motion.div>
         </div>
 

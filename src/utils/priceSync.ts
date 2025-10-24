@@ -3,7 +3,7 @@
  * Permet de récupérer les prix en temps réel et l'historique
  */
 
-import priceHistory from '../price-sync-free-only/data/price_history.json';
+import priceHistory from '../../price-sync-free-only/data/price_history.json';
 
 export interface PriceOffer {
   vendor: string;

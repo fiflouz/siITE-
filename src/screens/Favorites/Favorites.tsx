@@ -15,10 +15,10 @@ import {
   TrendingUp,
   Calendar
 } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
-import { getComponentsWithDetails, ComponentWithDetails } from '../data/componentsData';
-import { FavoriteButton } from '../components/FavoriteButton';
-import { ComponentDetailModal } from '../components/ComponentDetailModal';
+import { useAuth } from '../../contexts/AuthContext';
+import { getComponentsWithDetails, ComponentWithDetails } from '../../data/componentsData';
+import { FavoriteButton } from '../../components/FavoriteButton';
+import { ComponentDetailModal } from '../../components/ComponentDetailModal';
 
 type SortOption = 'name' | 'price' | 'dateAdded' | 'category';
 type ViewMode = 'grid' | 'list';
@@ -37,9 +37,9 @@ export const Favorites: React.FC = () => {
   
   // Get favorite components with details
   const favoriteComponents = useMemo(() => {
-    if (!user || !user.favoriteComponents.length) return [];
+    if (!user || !user.favorites.length) return [];
     
-    return user.favoriteComponents
+    return user.favorites
       .map(componentId => {
         const component = allComponents.find(c => c.id === componentId);
         return component ? {

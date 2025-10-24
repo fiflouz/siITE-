@@ -1,6 +1,8 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layout } from "../../components/Layout";
+import { SaveConfigModal } from "../../components/SaveConfigModal";
+import { useAuth } from "../../contexts/AuthContext";
 import { getComponentsWithDetails, ComponentWithDetails, Category } from "../../data/componentsData";
 import { AIQuestionnaire } from "./AIQuestionnaire";
 import { ComponentDetailModal } from "../../components/ComponentDetailModal";
@@ -67,6 +69,9 @@ export const Configurator = () => {
 
   // Component Detail Modal State
   const [selectedComponentForDetail, setSelectedComponentForDetail] = useState<Component | null>(null);
+
+  const { isLoggedIn, openAuthModal, saveConfiguration, isLoading } = useAuth();
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
 
   // Define configuration steps in order
   const configurationSteps = useMemo<{ key: ConfigStep; name: string; icon: any; color: string; category: Category }[]>(() => ([
@@ -259,6 +264,10 @@ export const Configurator = () => {
     return rows.reduce((s, r) => s + (priceMap[r.name || '']?.ttc ?? r.fallback), 0);
   }, [priceMap, config]);
 
+  const hasSelectedComponents = useMemo(() => Object.values(config).some((component) => component !== null), [config]);
+  const roundedTotalPrice = useMemo(() => Number(totalTTC.toFixed(2)), [totalTTC]);
+  const isSavingConfiguration = isLoading && isSaveModalOpen;
+
   const generateAIConfig = () => {
     const budget = answers.budget || 1500;
     const usage = answers.usage || "gaming";
@@ -358,6 +367,93 @@ export const Configurator = () => {
 
     setConfig(tempConfig);
     setShowResults(true);
+  };
+
+  const handleSaveClick = () => {
+    if (!hasSelectedComponents) {
+      return;
+    }
+    if (!isLoggedIn) {
+      openAuthModal();
+      return;
+    }
+    setIsSaveModalOpen(true);
+  };
+
+  const handleSaveConfiguration = async (
+    name: string,
+    description?: string,
+    isPublic?: boolean,
+    tags?: string[]
+  ) => {
+    if (!hasSelectedComponents) {
+      throw new Error("Veuillez sélectionner au moins un composant avant de sauvegarder.");
+    }
+
+    const configMode = mode === "ai" && showResults ? "ai" : "manual";
+    const totalPriceValue = roundedTotalPrice;
+    const wattage = calculateTotalWattage(config);
+
+    const serializedComponents = Object.entries(config).map(([slot, component]) => {
+      if (!component) {
+        return { slot: slot as ConfigStep, component: null };
+      }
+      const priceInfo = priceMap[component.name ?? ""];
+      return {
+        slot: slot as ConfigStep,
+        component: {
+          id: component.id,
+          name: component.name,
+          brand: component.brand,
+          category: component.category,
+          price: component.price,
+          performance: component.performance,
+          wattage: component.wattage,
+          socket: component.socket,
+          generation: component.generation,
+          ramType: component.ramType,
+          chipset: component.chipset,
+          type: component.type,
+          capacity: component.capacity,
+          power: component.power,
+          specs: [...component.specs],
+          description: component.description,
+          utility: component.utility,
+          domain: component.domain,
+          rating: component.rating,
+          stock: component.stock,
+          selectedPrice: priceInfo?.ttc ?? component.price,
+          vendor: priceInfo?.vendor,
+          offerUrl: priceInfo?.url,
+          priceSource: priceInfo?.source,
+          priceFetchedAt: priceInfo?.fetchedAt,
+        },
+      };
+    });
+
+    const payload: Record<string, unknown> = {
+      mode: configMode,
+      components: serializedComponents,
+      summary: {
+        totalPrice: totalPriceValue,
+        performance: getPerformanceScore(),
+        wattage,
+        completion: getCompletionPercentage(),
+      },
+      answers: configMode === "ai" ? answers : undefined,
+      priceSources: Object.keys(priceMap).length > 0 ? priceMap : undefined,
+      metadata: {
+        description: description ?? null,
+        isPublic: Boolean(isPublic),
+        tags: tags ?? [],
+      },
+      savedAt: new Date().toISOString(),
+    };
+
+    const success = await saveConfiguration(name, payload, totalPriceValue);
+    if (!success) {
+      throw new Error("Impossible de sauvegarder la configuration.");
+    }
   };
 
   return (
@@ -559,7 +655,7 @@ export const Configurator = () => {
                     const isPast = index < safeStepIndex;
 
                     return (
-                      <React.Fragment key={step.key}>
+                      <Fragment key={step.key}>
                         <motion.div
                           whileHover={{ scale: 1.05 }}
                           onClick={() => setCurrentStep(index)}
@@ -591,7 +687,7 @@ export const Configurator = () => {
                             isPast ? 'bg-[#4F8BF7]' : 'bg-white/10'
                           }`} />
                         )}
-                      </React.Fragment>
+                      </Fragment>
                     );
                   })}
                 </div>
@@ -912,13 +1008,24 @@ export const Configurator = () => {
                     {/* Action Buttons */}
                     <div className="space-y-3">
                       <motion.button
+                        type="button"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        disabled={totalTTC === 0}
+                        onClick={handleSaveClick}
+                        disabled={!hasSelectedComponents || isSaveModalOpen || isSavingConfiguration}
                         className="w-full py-3 bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] text-white rounded-lg font-semibold shadow-lg shadow-[#4F8BF7]/30 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        <Save className="w-5 h-5" />
-                        Sauvegarder
+                        {isSavingConfiguration ? (
+                          <>
+                            <Loader2 className="w-5 h-5 animate-spin" />
+                            Sauvegarde...
+                          </>
+                        ) : (
+                          <>
+                            <Save className="w-5 h-5" />
+                            Sauvegarder
+                          </>
+                        )}
                       </motion.button>
                       
                       <div className="grid grid-cols-2 gap-3">
@@ -976,6 +1083,14 @@ export const Configurator = () => {
         component={selectedComponentForDetail} 
         onClose={() => setSelectedComponentForDetail(null)} 
         priceMap={priceMap}
+      />
+
+      <SaveConfigModal
+        isOpen={isSaveModalOpen}
+        onClose={() => setIsSaveModalOpen(false)}
+        onSave={handleSaveConfiguration}
+        isLoading={isSavingConfiguration}
+        totalPrice={roundedTotalPrice}
       />
     </Layout>
   );

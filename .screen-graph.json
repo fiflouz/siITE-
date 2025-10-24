@@ -1,28 +1,6 @@
 {
   "nodes": [
     {
-      "id": "src/screens/GamingFrame/GamingFrame.tsx",
-      "label": "GamingFrame",
-      "routes": [
-        "/"
-      ],
-      "isRoot": true
-    },
-    {
-      "id": "src/screens/Configurator/Configurator.tsx",
-      "label": "Configurator",
-      "routes": [
-        "/configurateur"
-      ]
-    },
-    {
-      "id": "src/screens/Comparator/Comparator.tsx",
-      "label": "Comparator",
-      "routes": [
-        "/comparateur"
-      ]
-    },
-    {
       "id": "src/screens/Components/Components.tsx",
       "label": "Components",
       "routes": [
@@ -30,107 +8,275 @@
       ]
     },
     {
-      "id": "src/screens/Guides/Guides.tsx",
-      "label": "Guides",
+      "id": "src/screens/GamingFrame/GamingFrame.tsx",
+      "label": "GamingFrame",
       "routes": [
-        "/guides"
+        "/gaming-frame"
+      ]
+    },
+    {
+      "id": "src/screens/Dashboard/Dashboard.tsx",
+      "label": "Dashboard",
+      "routes": [
+        "/dashboard"
+      ]
+    },
+    {
+      "id": "src/screens/Favorites/Favorites.tsx",
+      "label": "Favorites",
+      "routes": [
+        "/favoris"
+      ]
+    },
+    {
+      "id": "src/screens/Profile/Profile.tsx",
+      "label": "Profile",
+      "routes": [
+        "/profil"
+      ]
+    },
+    {
+      "id": "src/screens/Account/AccountHome.tsx",
+      "label": "AccountHome",
+      "routes": [
+        "/me"
+      ]
+    },
+    {
+      "id": "src/screens/Account/SavedPage.tsx",
+      "label": "SavedPage",
+      "routes": [
+        "/me/saved"
+      ]
+    },
+    {
+      "id": "src/screens/Account/ComparisonsPage.tsx",
+      "label": "ComparisonsPage",
+      "routes": [
+        "/me/comparisons"
+      ]
+    },
+    {
+      "id": "src/screens/Account/BuildsPage.tsx",
+      "label": "BuildsPage",
+      "routes": [
+        "/me/builds"
+      ]
+    },
+    {
+      "id": "src/screens/Account/AlertsPage.tsx",
+      "label": "AlertsPage",
+      "routes": [
+        "/me/alerts"
       ]
     }
   ],
   "edges": [
     {
-      "id": "src/screens/GamingFrame/GamingFrame.tsx:121:14-to-src/screens/Configurator/Configurator.tsx",
-      "source": "src/screens/GamingFrame/GamingFrame.tsx",
-      "target": "src/screens/Configurator/Configurator.tsx",
+      "id": "src/components/UserMenu.tsx:132:14-to-src/screens/Account/AccountHome.tsx",
+      "source": "src/screens/Components/Components.tsx",
+      "target": "src/screens/Account/AccountHome.tsx",
       "data": {
-        "viaRoute": "/configurateur",
+        "viaRoute": "/me",
         "trigger": {
-          "element": "<Link to=\"/configurateur\">\n                <motion.button\n                  whileHover={{ scale: 1.05, boxShadow: \"0 0 30px rgba(124, 58, 237, 0.4)\" }}\n                  whileTap={{ scale: 0.95 }}\n                  className=\"px-8 py-3.5 bg-gradient-to-r from-[#4F8BF7] to-[#6B9CFF] text-white rounded-lg font-semibold shadow-lg shadow-[#4F8BF7]/30 flex items-center gap-2\"\n                >\n                  <Cpu className=\"w-5 h-5\" />\n                  Créer ma config\n                </motion.button>\n              </Link>",
-          "line": 121,
-          "endLine": 130,
+          "element": "<Link\n                to=\"/me\"\n                onClick={() => setIsOpen(false)}\n                className=\"flex items-center gap-2 rounded-xl px-3 py-2 transition-colors hover:bg-white/5\"\n              >\n                <User2 className=\"h-4 w-4\" />\n                Compte\n              </Link>",
+          "line": 132,
+          "endLine": 139,
           "column": 14,
           "endColumn": 21,
-          "sourceFile": "src/screens/GamingFrame/GamingFrame.tsx"
+          "sourceFile": "src/components/UserMenu.tsx"
         }
       }
     },
     {
-      "id": "src/components/Layout.tsx:64:10-to-src/screens/GamingFrame/GamingFrame.tsx",
-      "source": "src/screens/GamingFrame/GamingFrame.tsx",
-      "target": "src/screens/GamingFrame/GamingFrame.tsx",
+      "id": "src/components/UserMenu.tsx:132:14-to-src/screens/Account/AccountHome.tsx",
+      "source": "src/screens/Components/Components.tsx",
+      "target": "src/screens/Account/AccountHome.tsx",
       "data": {
-        "viaRoute": "/",
+        "viaRoute": "/me",
         "trigger": {
-          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <motion.div \n              className=\"w-10 h-10 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-lg flex items-center justify-center\"\n              whileHover={{ rotate: 360 }}\n              transition={{ duration: 0.6 }}\n            >\n              <Cpu className=\"w-6 h-6 text-white\" />\n            </motion.div>\n            <span className=\"text-xl font-bold text-[#F5F5F7] tracking-tight\">\n              PC Builder\n            </span>\n          </Link>",
-          "line": 64,
-          "endLine": 75,
-          "column": 10,
-          "endColumn": 17,
-          "sourceFile": "src/components/Layout.tsx"
+          "element": "<Link\n                to=\"/me\"\n                onClick={() => setIsOpen(false)}\n                className=\"flex items-center gap-2 rounded-xl px-3 py-2 transition-colors hover:bg-white/5\"\n              >\n                <User2 className=\"h-4 w-4\" />\n                Compte\n              </Link>",
+          "line": 132,
+          "endLine": 139,
+          "column": 14,
+          "endColumn": 21,
+          "sourceFile": "src/components/UserMenu.tsx"
         }
       }
     },
     {
-      "id": "src/components/Layout.tsx:64:10-to-src/screens/GamingFrame/GamingFrame.tsx",
-      "source": "src/screens/GamingFrame/GamingFrame.tsx",
-      "target": "src/screens/GamingFrame/GamingFrame.tsx",
+      "id": "src/components/UserMenu.tsx:132:14-to-src/screens/Account/AccountHome.tsx",
+      "source": "src/screens/Components/Components.tsx",
+      "target": "src/screens/Account/AccountHome.tsx",
       "data": {
-        "viaRoute": "/",
+        "viaRoute": "/me",
         "trigger": {
-          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <motion.div \n              className=\"w-10 h-10 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-lg flex items-center justify-center\"\n              whileHover={{ rotate: 360 }}\n              transition={{ duration: 0.6 }}\n            >\n              <Cpu className=\"w-6 h-6 text-white\" />\n            </motion.div>\n            <span className=\"text-xl font-bold text-[#F5F5F7] tracking-tight\">\n              PC Builder\n            </span>\n          </Link>",
-          "line": 64,
-          "endLine": 75,
-          "column": 10,
-          "endColumn": 17,
-          "sourceFile": "src/components/Layout.tsx"
+          "element": "<Link\n                to=\"/me\"\n                onClick={() => setIsOpen(false)}\n                className=\"flex items-center gap-2 rounded-xl px-3 py-2 transition-colors hover:bg-white/5\"\n              >\n                <User2 className=\"h-4 w-4\" />\n                Compte\n              </Link>",
+          "line": 132,
+          "endLine": 139,
+          "column": 14,
+          "endColumn": 21,
+          "sourceFile": "src/components/UserMenu.tsx"
         }
       }
     },
     {
-      "id": "src/components/Layout.tsx:64:10-to-src/screens/GamingFrame/GamingFrame.tsx",
-      "source": "src/screens/GamingFrame/GamingFrame.tsx",
-      "target": "src/screens/GamingFrame/GamingFrame.tsx",
+      "id": "src/components/UserMenu.tsx:132:14-to-src/screens/Account/AccountHome.tsx",
+      "source": "src/screens/Components/Components.tsx",
+      "target": "src/screens/Account/AccountHome.tsx",
       "data": {
-        "viaRoute": "/",
+        "viaRoute": "/me",
         "trigger": {
-          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <motion.div \n              className=\"w-10 h-10 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-lg flex items-center justify-center\"\n              whileHover={{ rotate: 360 }}\n              transition={{ duration: 0.6 }}\n            >\n              <Cpu className=\"w-6 h-6 text-white\" />\n            </motion.div>\n            <span className=\"text-xl font-bold text-[#F5F5F7] tracking-tight\">\n              PC Builder\n            </span>\n          </Link>",
-          "line": 64,
-          "endLine": 75,
-          "column": 10,
-          "endColumn": 17,
-          "sourceFile": "src/components/Layout.tsx"
+          "element": "<Link\n                to=\"/me\"\n                onClick={() => setIsOpen(false)}\n                className=\"flex items-center gap-2 rounded-xl px-3 py-2 transition-colors hover:bg-white/5\"\n              >\n                <User2 className=\"h-4 w-4\" />\n                Compte\n              </Link>",
+          "line": 132,
+          "endLine": 139,
+          "column": 14,
+          "endColumn": 21,
+          "sourceFile": "src/components/UserMenu.tsx"
         }
       }
     },
     {
-      "id": "src/components/Layout.tsx:64:10-to-src/screens/GamingFrame/GamingFrame.tsx",
-      "source": "src/screens/GamingFrame/GamingFrame.tsx",
-      "target": "src/screens/GamingFrame/GamingFrame.tsx",
+      "id": "src/screens/Account/SavedPage.tsx:50:12-to-src/screens/Components/Components.tsx",
+      "source": "src/screens/Account/SavedPage.tsx",
+      "target": "src/screens/Components/Components.tsx",
       "data": {
-        "viaRoute": "/",
+        "viaRoute": "/composants",
         "trigger": {
-          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <motion.div \n              className=\"w-10 h-10 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-lg flex items-center justify-center\"\n              whileHover={{ rotate: 360 }}\n              transition={{ duration: 0.6 }}\n            >\n              <Cpu className=\"w-6 h-6 text-white\" />\n            </motion.div>\n            <span className=\"text-xl font-bold text-[#F5F5F7] tracking-tight\">\n              PC Builder\n            </span>\n          </Link>",
-          "line": 64,
-          "endLine": 75,
-          "column": 10,
-          "endColumn": 17,
-          "sourceFile": "src/components/Layout.tsx"
+          "element": "<Link\n              to=\"/composants\"\n              className=\"inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm font-medium text-white/80 hover:border-[#4F8BF7]/50 hover:text-white\"\n            >\n              Explorer le catalogue\n            </Link>",
+          "line": 50,
+          "endLine": 55,
+          "column": 12,
+          "endColumn": 19,
+          "sourceFile": "src/screens/Account/SavedPage.tsx"
         }
       }
     },
     {
-      "id": "src/components/Layout.tsx:64:10-to-src/screens/GamingFrame/GamingFrame.tsx",
-      "source": "src/screens/GamingFrame/GamingFrame.tsx",
-      "target": "src/screens/GamingFrame/GamingFrame.tsx",
+      "id": "src/components/UserMenu.tsx:132:14-to-src/screens/Account/AccountHome.tsx",
+      "source": "src/screens/Components/Components.tsx",
+      "target": "src/screens/Account/AccountHome.tsx",
       "data": {
-        "viaRoute": "/",
+        "viaRoute": "/me",
         "trigger": {
-          "element": "<Link to=\"/\" className=\"flex items-center gap-3\">\n            <motion.div \n              className=\"w-10 h-10 bg-gradient-to-br from-[#4F8BF7] to-[#6B9CFF] rounded-lg flex items-center justify-center\"\n              whileHover={{ rotate: 360 }}\n              transition={{ duration: 0.6 }}\n            >\n              <Cpu className=\"w-6 h-6 text-white\" />\n            </motion.div>\n            <span className=\"text-xl font-bold text-[#F5F5F7] tracking-tight\">\n              PC Builder\n            </span>\n          </Link>",
-          "line": 64,
-          "endLine": 75,
-          "column": 10,
-          "endColumn": 17,
-          "sourceFile": "src/components/Layout.tsx"
+          "element": "<Link\n                to=\"/me\"\n                onClick={() => setIsOpen(false)}\n                className=\"flex items-center gap-2 rounded-xl px-3 py-2 transition-colors hover:bg-white/5\"\n              >\n                <User2 className=\"h-4 w-4\" />\n                Compte\n              </Link>",
+          "line": 132,
+          "endLine": 139,
+          "column": 14,
+          "endColumn": 21,
+          "sourceFile": "src/components/UserMenu.tsx"
+        }
+      }
+    },
+    {
+      "id": "src/components/UserMenu.tsx:132:14-to-src/screens/Account/AccountHome.tsx",
+      "source": "src/screens/Components/Components.tsx",
+      "target": "src/screens/Account/AccountHome.tsx",
+      "data": {
+        "viaRoute": "/me",
+        "trigger": {
+          "element": "<Link\n                to=\"/me\"\n                onClick={() => setIsOpen(false)}\n                className=\"flex items-center gap-2 rounded-xl px-3 py-2 transition-colors hover:bg-white/5\"\n              >\n                <User2 className=\"h-4 w-4\" />\n                Compte\n              </Link>",
+          "line": 132,
+          "endLine": 139,
+          "column": 14,
+          "endColumn": 21,
+          "sourceFile": "src/components/UserMenu.tsx"
+        }
+      }
+    },
+    {
+      "id": "src/components/UserMenu.tsx:132:14-to-src/screens/Account/AccountHome.tsx",
+      "source": "src/screens/Components/Components.tsx",
+      "target": "src/screens/Account/AccountHome.tsx",
+      "data": {
+        "viaRoute": "/me",
+        "trigger": {
+          "element": "<Link\n                to=\"/me\"\n                onClick={() => setIsOpen(false)}\n                className=\"flex items-center gap-2 rounded-xl px-3 py-2 transition-colors hover:bg-white/5\"\n              >\n                <User2 className=\"h-4 w-4\" />\n                Compte\n              </Link>",
+          "line": 132,
+          "endLine": 139,
+          "column": 14,
+          "endColumn": 21,
+          "sourceFile": "src/components/UserMenu.tsx"
+        }
+      }
+    },
+    {
+      "id": "src/components/UserMenu.tsx:132:14-to-src/screens/Account/AccountHome.tsx",
+      "source": "src/screens/Components/Components.tsx",
+      "target": "src/screens/Account/AccountHome.tsx",
+      "data": {
+        "viaRoute": "/me",
+        "trigger": {
+          "element": "<Link\n                to=\"/me\"\n                onClick={() => setIsOpen(false)}\n                className=\"flex items-center gap-2 rounded-xl px-3 py-2 transition-colors hover:bg-white/5\"\n              >\n                <User2 className=\"h-4 w-4\" />\n                Compte\n              </Link>",
+          "line": 132,
+          "endLine": 139,
+          "column": 14,
+          "endColumn": 21,
+          "sourceFile": "src/components/UserMenu.tsx"
+        }
+      }
+    },
+    {
+      "id": "src/components/UserMenu.tsx:132:14-to-src/screens/Account/AccountHome.tsx",
+      "source": "src/screens/Components/Components.tsx",
+      "target": "src/screens/Account/AccountHome.tsx",
+      "data": {
+        "viaRoute": "/me",
+        "trigger": {
+          "element": "<Link\n                to=\"/me\"\n                onClick={() => setIsOpen(false)}\n                className=\"flex items-center gap-2 rounded-xl px-3 py-2 transition-colors hover:bg-white/5\"\n              >\n                <User2 className=\"h-4 w-4\" />\n                Compte\n              </Link>",
+          "line": 132,
+          "endLine": 139,
+          "column": 14,
+          "endColumn": 21,
+          "sourceFile": "src/components/UserMenu.tsx"
+        }
+      }
+    },
+    {
+      "id": "src/components/UserMenu.tsx:132:14-to-src/screens/Account/AccountHome.tsx",
+      "source": "src/screens/Components/Components.tsx",
+      "target": "src/screens/Account/AccountHome.tsx",
+      "data": {
+        "viaRoute": "/me",
+        "trigger": {
+          "element": "<Link\n                to=\"/me\"\n                onClick={() => setIsOpen(false)}\n                className=\"flex items-center gap-2 rounded-xl px-3 py-2 transition-colors hover:bg-white/5\"\n              >\n                <User2 className=\"h-4 w-4\" />\n                Compte\n              </Link>",
+          "line": 132,
+          "endLine": 139,
+          "column": 14,
+          "endColumn": 21,
+          "sourceFile": "src/components/UserMenu.tsx"
+        }
+      }
+    },
+    {
+      "id": "src/components/UserMenu.tsx:132:14-to-src/screens/Account/AccountHome.tsx",
+      "source": "src/screens/Components/Components.tsx",
+      "target": "src/screens/Account/AccountHome.tsx",
+      "data": {
+        "viaRoute": "/me",
+        "trigger": {
+          "element": "<Link\n                to=\"/me\"\n                onClick={() => setIsOpen(false)}\n                className=\"flex items-center gap-2 rounded-xl px-3 py-2 transition-colors hover:bg-white/5\"\n              >\n                <User2 className=\"h-4 w-4\" />\n                Compte\n              </Link>",
+          "line": 132,
+          "endLine": 139,
+          "column": 14,
+          "endColumn": 21,
+          "sourceFile": "src/components/UserMenu.tsx"
+        }
+      }
+    },
+    {
+      "id": "src/components/UserMenu.tsx:132:14-to-src/screens/Account/AccountHome.tsx",
+      "source": "src/screens/Components/Components.tsx",
+      "target": "src/screens/Account/AccountHome.tsx",
+      "data": {
+        "viaRoute": "/me",
+        "trigger": {
+          "element": "<Link\n                to=\"/me\"\n                onClick={() => setIsOpen(false)}\n                className=\"flex items-center gap-2 rounded-xl px-3 py-2 transition-colors hover:bg-white/5\"\n              >\n                <User2 className=\"h-4 w-4\" />\n                Compte\n              </Link>",
+          "line": 132,
+          "endLine": 139,
+          "column": 14,
+          "endColumn": 21,
+          "sourceFile": "src/components/UserMenu.tsx"
         }
       }
     }

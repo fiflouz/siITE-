@@ -16,7 +16,7 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
   showLabel = false,
   className = ''
 }) => {
-  const { isLoggedIn, isFavorite, addToFavorites, removeFromFavorites } = useAuth();
+  const { isLoggedIn, isFavorite, addToFavorites, removeFromFavorites, openAuthModal } = useAuth();
   
   const isFav = isFavorite(componentId);
   
@@ -25,7 +25,7 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
     e.stopPropagation();
     
     if (!isLoggedIn) {
-      // TODO: Show login modal
+      openAuthModal();
       return;
     }
     
@@ -40,13 +40,13 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
     sm: 'w-6 h-6 p-1',
     md: 'w-8 h-8 p-1.5',
     lg: 'w-10 h-10 p-2'
-  };
+  } as const;
 
   const iconSizes = {
     sm: 'w-4 h-4',
     md: 'w-5 h-5',
     lg: 'w-6 h-6'
-  };
+  } as const;
 
   return (
     <motion.button
@@ -62,11 +62,10 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
           ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30' 
           : 'bg-white/5 text-[#A1A1AA] hover:bg-white/10 hover:text-red-400'
         }
-        ${!isLoggedIn ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
         ${className}
       `}
-      disabled={!isLoggedIn}
-      title={isLoggedIn ? (isFav ? 'Retirer des favoris' : 'Ajouter aux favoris') : 'Connectez-vous pour ajouter aux favoris'}
+      aria-pressed={isFav}
+      title={isLoggedIn ? (isFav ? 'Retirer des favoris' : 'Ajouter aux favoris') : 'Connecte-toi pour sauvegarder'}
     >
       <motion.div
         animate={isFav ? { scale: [1, 1.2, 1] } : { scale: 1 }}

@@ -1,5 +1,5 @@
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
-import { usePrice } from '../../hooks/usePrice';
+import { usePrice } from '../hooks/usePrice';
 import type { MappedComponent } from '../../data/componentsData';
 
 interface ComponentCardProps {
@@ -22,7 +22,7 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({ item, onPick }) =>
     : Minus;
 
   return (
-    <div className="group relative bg-[#1a1a1a]/80 backdrop-blur-xl rounded-2xl border border-white/10 p-6 hover:border-[#4F8BF7]/50 transition-all duration-300 hover:shadow-xl hover:shadow-[#4F8BF7]/10 hover:-translate-y-1">
+    <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[#1a1a1a]/80 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-[#4F8BF7]/50 hover:shadow-xl hover:shadow-[#4F8BF7]/10">
       {/* Brand Badge */}
       <div className="absolute top-4 right-4">
         <span className="px-3 py-1 bg-[#4F8BF7]/20 text-[#4F8BF7] rounded-full text-xs font-semibold">
@@ -96,10 +96,48 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({ item, onPick }) =>
       {/* Real-time data indicator */}
       {priceInfo.hasData && (
         <div className="mt-2 flex items-center gap-1 text-xs text-[#4F8BF7]">
-          <div className="w-1.5 h-1.5 bg-[#4F8BF7] rounded-full animate-pulse"></div>
+          <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#4F8BF7]" />
           <span>Prix en temps réel</span>
         </div>
       )}
+
+      <div className="pointer-events-none absolute inset-0 flex h-full flex-col justify-between rounded-2xl border border-[#4F8BF7]/30 bg-gradient-to-br from-[#08090F]/85 via-[#0E1B2F]/80 to-[#132542]/75 px-6 py-6 opacity-0 backdrop-blur-xl transition-opacity duration-300 group-hover:opacity-100">
+        <div>
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#4F8BF7]/40 bg-[#4F8BF7]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-[#74A3FF]">
+            Détails
+          </span>
+          <h4 className="mt-3 text-lg font-semibold text-white">{item.name}</h4>
+          {item.description && (
+            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-[#B5C7FF]/85">
+              {item.description}
+            </p>
+          )}
+        </div>
+        <div className="space-y-3 text-xs text-[#E2E8FF]/75">
+          {item.utility && (
+            <div className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[#74A3FF]" />
+              <span>{item.utility}</span>
+            </div>
+          )}
+          {item.domain && (
+            <div className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[#74A3FF]" />
+              <span>{item.domain}</span>
+            </div>
+          )}
+          <div className="mt-3 flex flex-wrap gap-2">
+            {item.specs.slice(0, 6).map((spec) => (
+              <span
+                key={spec}
+                className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-wide text-[#EFF6FF]/90"
+              >
+                {spec}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

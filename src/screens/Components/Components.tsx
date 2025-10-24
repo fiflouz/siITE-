@@ -9,6 +9,9 @@ import {
   getComponentsWithDetails,
 } from "../../data/componentsData";
 import { fmt } from "../../utils/priceFetcher";
+import { useCompare } from "../../hooks/useCompare";
+import { CompareBar, type CompareItem } from "../../components/compare/CompareBar";
+import { ProductCard } from "../../components/ProductCard";
 
 type SortKey = "price-asc" | "price-desc" | "performance";
 
@@ -40,6 +43,7 @@ export default function Components() {
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<SortKey>("price-asc");
   const [selectedComponent, setSelectedComponent] = useState<ComponentWithDetails | null>(null);
+  const { ids: compareIds, remove: removeFromCompare } = useCompare();
 
   const components = useMemo(() => {
     const base = getComponentsWithDetails(category);
@@ -207,6 +211,20 @@ export default function Components() {
         component={selectedComponent}
         onClose={() => setSelectedComponent(null)}
         priceMap={emptyPriceMap}
+      />
+      
+      {/* CompareBar - Apparaît quand au moins 2 items sont sélectionnés */}
+      <CompareBar
+        items={compareIds.map(id => {
+          const component = components.find(c => c.id === id) || getComponentsWithDetails(category).find(c => c.id === id);
+          return {
+            id,
+            model: component?.name || id,
+            brand: component?.brand,
+            category: category,
+          } as CompareItem;
+        })}
+        onRemove={removeFromCompare}
       />
     </Layout>
   );
